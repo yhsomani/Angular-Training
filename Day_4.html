@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Web Concepts Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Using a custom font from Google Fonts */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+
+        /* Custom animation for cards */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Styling for the animated eyes from one of the examples */
+        #eye-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem;
+            background-color: #1a1a1a;
+            border-radius: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .eye-socket {
+            height: 150px;
+            width: 250px;
+            border: 5px solid;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .eye-socket#left-eye {
+            border-radius: 0 100% 0 100%;
+            border-color: #ef4444 #34d399 #3b82f6 #f97316;
+            border-style: solid dashed groove double;
+        }
+
+        .eye-socket#right-eye {
+            border-radius: 100% 0 100% 0;
+            border-color: #ef4444 #f97316 #3b82f6 #34d399;
+            border-style: solid double groove dashed;
+        }
+
+        .eyeball {
+            height: 50px;
+            width: 50px;
+            background-color: black;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-slate-900 to-slate-700 text-white text-center p-12 shadow-lg">
+        <h1 class="text-5xl font-bold mb-2">Web Development Showcase</h1>
+        <p class="text-xl text-slate-300">Merging HTML, CSS, & JavaScript Concepts</p>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-slate-800 sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-center space-x-4">
+                <a href="#data-form-section" class="text-white hover:bg-slate-700 px-3 py-4 text-sm font-medium rounded-md transition-colors">Interactive Form</a>
+                <a href="#api-data-section" class="text-white hover:bg-slate-700 px-3 py-4 text-sm font-medium rounded-md transition-colors">API Data Fetching</a>
+                <a href="#json-section" class="text-white hover:bg-slate-700 px-3 py-4 text-sm font-medium rounded-md transition-colors">JSON Playground</a>
+                <a href="#css-art-section" class="text-white hover:bg-slate-700 px-3 py-4 text-sm font-medium rounded-md transition-colors">CSS Art</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto p-4 md:p-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            <!-- Left Column / Sidebar -->
+            <aside class="md:col-span-1 space-y-8">
+                <!-- About Me Card -->
+                <div id="about-me-section" class="card bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4 border-b pb-2">About This Demo</h2>
+                    <div class="h-48 bg-gradient-to-br from-sky-400 to-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4">
+                        Showcase Image
+                    </div>
+                    <p class="text-gray-600">
+                        This page consolidates various web development concepts into one interactive experience. It demonstrates:
+                    </p>
+                    <ul class="list-disc list-inside mt-2 text-gray-600 space-y-1">
+                        <li>Responsive HTML structure.</li>
+                        <li>Modern CSS with TailwindCSS.</li>
+                        <li>DOM manipulation with JavaScript.</li>
+                        <li>Handling local data.</li>
+                        <li>Fetching data from a remote API.</li>
+                        <li>Parsing and stringifying JSON.</li>
+                    </ul>
+                </div>
+                 <!-- Note on Server-Side Code -->
+                 <div id="server-note-section" class="card bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4 border-b pb-2">A Note on Node.js/Express</h2>
+                    <p class="text-gray-600 mb-4">
+                        One of the provided snippets was a basic server using Node.js and the Express framework. That code cannot run in the browser; it must be run on a server.
+                    </p>
+                    <p class="text-gray-600">
+                       A form like `<form action="/submit">` would send its data to a server running that code. The server would then process the request and send back a response, like "hello".
+                    </p>
+                 </div>
+            </aside>
+
+            <!-- Right Column / Main Content -->
+            <div class="md:col-span-2 space-y-8">
+
+                <!-- Section 1: Interactive Data Form -->
+                <section id="data-form-section" class="card bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">1. Interactive Data Form</h2>
+                    <p class="text-gray-600 mb-6">Enter data into the form. It will be stored in a temporary array in your browser and displayed in the table below. This demonstrates DOM manipulation and local data handling.</p>
+                    
+                    <!-- Notification container -->
+                    <div id="form-notification" class="transition-opacity duration-500 ease-in-out opacity-0"></div>
+
+                    <form id="infoForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label for="fname" class="block text-sm font-medium text-gray-700">First Name</label>
+                            <input type="text" id="fname" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label for="lname" class="block text-sm font-medium text-gray-700">Last Name</label>
+                            <input type="text" id="lname" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label for="age" class="block text-sm font-medium text-gray-700">Age</label>
+                            <input type="number" id="age" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label for="salary" class="block text-sm font-medium text-gray-700">Salary</label>
+                            <input type="number" id="salary" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        </div>
+                    </form>
+                    <div class="flex space-x-4">
+                         <button type="button" onclick="saveData()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">Save Data</button>
+                         <button type="button" onclick="displayData()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">Display Data</button>
+                    </div>
+
+                    <h3 class="text-xl font-bold mt-8 mb-4">Saved Local Data:</h3>
+                    <div class="overflow-x-auto">
+                        <table id="dataTable" class="min-w-full bg-white border border-gray-200 rounded-lg">
+                            <thead class="bg-gray-50"></thead>
+                            <tbody></tbody>
+                        </table>
+                        <p id="no-data-message" class="text-gray-500 mt-4">No data to display yet.</p>
+                    </div>
+                </section>
+
+                <!-- Section 2: Fetching Data from an API -->
+                <section id="api-data-section" class="card bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">2. Fetch Data from API</h2>
+                    <p class="text-gray-600 mb-6">Click the button to fetch user data from the JSONPlaceholder API. This demonstrates asynchronous JavaScript and handling remote JSON data.</p>
+                    <button onclick="fetchApiData()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors mb-6">Fetch API Users</button>
+                    <div id="api-data-container" class="space-y-3">
+                        <!-- API data will be inserted here -->
+                    </div>
+                </section>
+                
+                <!-- Section 3: JSON Playground -->
+                <section id="json-section" class="card bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">3. JSON Playground</h2>
+                    <p class="text-gray-600 mb-6">Experiment with converting data between JavaScript objects and JSON strings.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- JSON.stringify() -->
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Object to JSON String</h3>
+                            <p class="text-sm text-gray-500 mb-2">The JS object is converted to a string using `JSON.stringify()`.</p>
+                            <pre class="bg-gray-100 p-3 rounded-lg text-sm text-gray-800"><code>const user = {
+    name: "Alex Ray",
+    id: 101,
+    isMember: true
+};</code></pre>
+                            <button onclick="runStringify()" class="mt-2 w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">Stringify</button>
+                            <pre id="stringify-output" class="bg-gray-800 text-white mt-2 p-3 rounded-lg text-sm"></pre>
+                        </div>
+                        <!-- JSON.parse() -->
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">JSON String to Object</h3>
+                             <p class="text-sm text-gray-500 mb-2">The JSON string is parsed into a JS object using `JSON.parse()`.</p>
+                            <textarea id="json-input" class="w-full h-24 p-2 rounded-lg border border-gray-300 bg-gray-100 text-sm">{"title":"My Post","views":1500,"isPublished":false}</textarea>
+                            <button onclick="runParse()" class="mt-2 w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">Parse</button>
+                            <div id="parse-output" class="bg-gray-800 text-white mt-2 p-3 rounded-lg text-sm"></div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Section 4: CSS Art -->
+                <section id="css-art-section" class="card bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">4. CSS Art Demonstration</h2>
+                    <p class="text-gray-600 mb-6">This element is created purely with HTML and CSS, demonstrating advanced border and shape manipulation techniques from one of the provided examples.</p>
+                    <div id="eye-container">
+                        <div id="left-eye" class="eye-socket">
+                            <div class="eyeball"></div>
+                        </div>
+                        <div id="right-eye" class="eye-socket">
+                            <div class="eyeball"></div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white text-center p-8 mt-8">
+        <p>&copy; 2025 Web Concepts Demo. All rights reserved.</p>
+    </footer>
+
+
+    <script>
+        // --- 1. SCRIPT FOR INTERACTIVE DATA FORM ---
+        let userData = []; // Array to hold user data locally
+        let notificationTimeout;
+
+        function showMessage(message, isError = false) {
+            const notification = document.getElementById('form-notification');
+            if (!notification) return;
+
+            // Clear any existing timeout to prevent the message from disappearing early
+            if (notificationTimeout) {
+                clearTimeout(notificationTimeout);
+            }
+
+            notification.textContent = message;
+            
+            let classes = 'p-3 mb-4 rounded-lg transition-opacity duration-500 ease-in-out';
+            if (isError) {
+                notification.className = `${classes} bg-red-100 text-red-700 opacity-100`;
+            } else {
+                notification.className = `${classes} bg-green-100 text-green-700 opacity-100`;
+            }
+
+            notificationTimeout = setTimeout(() => {
+                notification.classList.add('opacity-0');
+            }, 3000); // Message disappears after 3 seconds
+        }
+
+        function saveData() {
+            const fnameInput = document.getElementById("fname");
+            const lnameInput = document.getElementById("lname");
+            const ageInput = document.getElementById("age");
+            const salaryInput = document.getElementById("salary");
+
+            const fname = fnameInput.value;
+            const lname = lnameInput.value;
+            const age = ageInput.value;
+            const salary = salaryInput.value;
+
+            // Basic validation
+            if (!fname || !lname || !age || !salary) {
+                showMessage("Please fill out all fields.", true);
+                return;
+            }
+
+            const user = {
+                firstName: fname,
+                lastName: lname,
+                age: parseInt(age),
+                salary: parseFloat(salary)
+            };
+            userData.push(user);
+            
+            // Clear the form fields manually and give feedback
+            fnameInput.value = '';
+            lnameInput.value = '';
+            ageInput.value = '';
+            salaryInput.value = '';
+            
+            showMessage("Data saved! Click 'Display Data' to see the updated table.");
+        }
+
+        function displayData() {
+            const table = document.getElementById("dataTable");
+            const thead = table.querySelector("thead");
+            const tbody = table.querySelector("tbody");
+            const noDataMessage = document.getElementById("no-data-message");
+            
+            thead.innerHTML = "";
+            tbody.innerHTML = "";
+
+            if (userData.length === 0) {
+                table.classList.add('hidden');
+                noDataMessage.classList.remove('hidden');
+                return;
+            }
+            
+            table.classList.remove('hidden');
+            noDataMessage.classList.add('hidden');
+            
+            // Create table header
+            const headerRow = document.createElement("tr");
+            Object.keys(userData[0]).forEach(key => {
+                const th = document.createElement("th");
+                th.className = "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider";
+                th.textContent = key.charAt(0).toUpperCase() + key.slice(1);
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+
+            // Create table body
+            userData.forEach((user, index) => {
+                const row = document.createElement("tr");
+                row.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+                Object.values(user).forEach(value => {
+                    const td = document.createElement("td");
+                    td.className = "px-6 py-4 whitespace-nowrap text-sm text-gray-700";
+                    td.textContent = value;
+                    row.appendChild(td);
+                });
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Initial call to set the table state
+        displayData();
+
+
+        // --- 2. SCRIPT FOR API DATA FETCHING ---
+        function fetchApiData() {
+            const container = document.getElementById("api-data-container");
+            container.innerHTML = `<p class="text-center text-gray-500">Fetching data...</p>`;
+            
+            fetch("https://jsonplaceholder.typicode.com/users")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    container.innerHTML = ""; // Clear loading message
+                    data.forEach(user => {
+                        const card = document.createElement("div");
+                        card.className = "bg-gray-50 p-4 rounded-lg border border-gray-200";
+                        card.innerHTML = `
+                            <p class="font-bold text-lg text-indigo-700">${user.name} <span class="text-sm font-normal text-gray-500">(@${user.username})</span></p>
+                            <p class="text-sm text-gray-600">${user.email}</p>
+                            <p class="text-sm text-gray-500 mt-1">${user.address.street}, ${user.address.city}</p>
+                        `;
+                        container.appendChild(card);
+                    });
+                })
+                .catch(error => {
+                    console.error('Failed to fetch data:', error);
+                    container.innerHTML = `<p class="text-center text-red-500">Failed to fetch data. Please check the console.</p>`;
+                });
+        }
+
+        // --- 3. SCRIPT FOR JSON PLAYGROUND ---
+        function runStringify() {
+            const user = {
+                name: "Alex Ray",
+                id: 101,
+                isMember: true
+            };
+            const jsonString = JSON.stringify(user, null, 2); // Using null, 2 for pretty printing
+            document.getElementById('stringify-output').textContent = jsonString;
+        }
+
+        function runParse() {
+            const jsonString = document.getElementById('json-input').value;
+            const outputDiv = document.getElementById('parse-output');
+            try {
+                const parsedObject = JSON.parse(jsonString);
+                outputDiv.innerHTML = `<p><strong>Type:</strong> ${typeof parsedObject}</p>`;
+                for (const key in parsedObject) {
+                    outputDiv.innerHTML += `<p><strong>${key}:</strong> ${parsedObject[key]}</p>`;
+                }
+            } catch (error) {
+                outputDiv.innerHTML = `<p class="text-red-400">Error parsing JSON: ${error.message}</p>`;
+            }
+        }
+        
+        // Run them on load to pre-fill the outputs
+        runStringify();
+        runParse();
+
+    </script>
+</body>
+
+</html>
+

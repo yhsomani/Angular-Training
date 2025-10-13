@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive HTML Showcase</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom styles for better aesthetics */
+        fieldset {
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        legend {
+            font-size: 1.25rem;
+            font-weight: 600;
+            padding: 0 0.5rem;
+            color: #111827;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Comprehensive HTML Showcase</h1>
+            <p class="text-lg text-gray-600 mt-2">A collection of various HTML elements and form functionalities.</p>
+        </header>
+
+        <!-- Authentication Section -->
+        <section id="authentication" class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-lg mb-12">
+            <div class="flex border-b border-gray-200 mb-6">
+                <button id="show-signin-btn" class="flex-1 py-2 font-semibold text-center text-indigo-600 border-b-2 border-indigo-600">Sign In</button>
+                <button id="show-signup-btn" class="flex-1 py-2 font-semibold text-center text-gray-500">Sign Up</button>
+            </div>
+
+            <!-- Signin Form -->
+            <form id="signin-form" action="#">
+                <div class="space-y-4">
+                    <div>
+                        <label for="signin-email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" name="email" id="signin-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="signin-password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" name="password" id="signin-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Sign In</button>
+                </div>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signup-form" action="#" class="hidden">
+                <div class="space-y-4">
+                    <div>
+                        <label for="signup-name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" name="name" id="signup-name" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="signup-date" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+                        <input type="date" name="date" id="signup-date" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="signup-email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" name="email" id="signup-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="signup-password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" name="password" id="signup-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Create Account</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- Left Column -->
+            <div class="space-y-8">
+                <!-- HTML5 Inputs -->
+                <fieldset class="bg-white p-6 rounded-xl shadow-lg">
+                    <legend>HTML 5 Input Types</legend>
+                    <form action="#" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div><label>Date: <input type="date" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                            <div><label>Color: <input type="color" class="w-full mt-1 h-10 border rounded-md"></label></div>
+                            <div><label>DateTime Local: <input type="datetime-local" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                            <div><label>Email: <input type="email" placeholder="user@example.com" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                            <div><label>Month: <input type="month" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                            <div><label>Week: <input type="week" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                            <div><label>Time: <input type="time" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                            <div><label>URL: <input type="url" placeholder="https://example.com" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                            <div><label>Search: <input type="search" placeholder="Search..." class="w-full mt-1 p-2 border rounded-md"></label></div>
+                            <div><label>Number (0-255): <input type="number" min="0" max="255" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                            <div class="sm:col-span-2"><label>Range: <input type="range" class="w-full mt-1"></label></div>
+                        </div>
+                         <div class="flex justify-end">
+                             <input type="submit" value="Submit" class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 cursor-pointer">
+                         </div>
+                    </form>
+                </fieldset>
+
+                <!-- HTML4 Style Inputs -->
+                 <fieldset class="bg-white p-6 rounded-xl shadow-lg">
+                    <legend>HTML 4 Style Inputs</legend>
+                    <form class="space-y-4">
+                        <div><label>Name: <input type="text" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                        <div><label>Password: <input type="password" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                        <div>
+                            <p>Gender:</p>
+                            <label class="mr-4"><input type="radio" name="gender" class="mr-1"> Male</label>
+                            <label><input type="radio" name="gender" class="mr-1"> Female</label>
+                        </div>
+                        <div>
+                            <p>Technologies:</p>
+                            <label class="block"><input type="checkbox" class="mr-1"> Java</label>
+                            <label class="block"><input type="checkbox" class="mr-1"> Angular</label>
+                            <label class="block"><input type="checkbox" class="mr-1"> Python</label>
+                        </div>
+                        <div><label>About Yourself: <textarea rows="3" class="w-full mt-1 p-2 border rounded-md"></textarea></label></div>
+                        <div><label>Select a file: <input type="file" class="w-full mt-1 text-sm"></label></div>
+                         <div class="flex justify-end">
+                            <input type="reset" value="Clear" class="mr-2 px-4 py-2 bg-gray-200 text-gray-800 font-semibold rounded-md hover:bg-gray-300 cursor-pointer">
+                            <input type="submit" value="Submit" class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 cursor-pointer">
+                         </div>
+                    </form>
+                </fieldset>
+
+                <!-- Miscellaneous Tags -->
+                <fieldset class="bg-white p-6 rounded-xl shadow-lg">
+                    <legend>Miscellaneous Elements</legend>
+                     <div class="space-y-4">
+                        <p>This is a fill-in-the-blank with a <mark>highlighted</mark> answer.</p>
+                        <p>Progress Bar (29%): <progress value="29" max="100" class="w-full"></progress></p>
+                        <p>Meter Bar (45%): <meter min="0" max="100" value="45" class="w-full"></meter></p>
+                        <p>This is an <acronym title="Thank You For Your Purchase">Acronym</acronym> example.</p>
+                        <p>This is an editable div:</p>
+                        <div contenteditable="true" class="p-2 border rounded-md bg-gray-50">You can edit this content.</div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- Right Column -->
+            <div class="space-y-8">
+                 <!-- Embedded Content -->
+                 <fieldset class="bg-white p-6 rounded-xl shadow-lg">
+                    <legend>Embedded Content</legend>
+                    <p class="mb-4">Embedded YouTube video:</p>
+                    <div class="aspect-w-16 aspect-h-9">
+                         <iframe class="w-full h-full rounded-lg" src="https://www.youtube.com/embed/-23UAPV2vmw?si=ix_nHCqOqMOui9pJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                     <hr class="my-6">
+                    <p class="mb-2"><a href="data:text/html,<p>This is the content loaded into the iframe.</p>" target="iframe_a" class="text-indigo-600 hover:underline">Click to load content into the iframe below</a></p>
+                    <iframe name="iframe_a" class="w-full h-32 border rounded-lg bg-gray-50" title="Iframe Example"></iframe>
+                </fieldset>
+                
+                 <!-- Lists and Selections -->
+                <fieldset class="bg-white p-6 rounded-xl shadow-lg">
+                    <legend>Lists & Selections</legend>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold mb-2">Ordered List</h3>
+                            <ol class="list-decimal list-inside space-y-2">
+                                <li>Mackbook Pro M4 Chip
+                                    <ul class="list-disc list-inside pl-5"><li>14 Inch</li><li>16 Inch</li></ul>
+                                </li>
+                                <li>Mackbook Pro M3 Chip
+                                    <ul class="list-disc list-inside pl-5"><li>14 Inch</li><li>16 Inch</li></ul>
+                                </li>
+                            </ol>
+                        </div>
+                        <div>
+                            <label class="font-semibold" for="laptop-choice">Datalist Input</label>
+                            <input list="Listoflaptops" id="laptop-choice" name="Laptops" class="w-full mt-1 p-2 border rounded-md">
+                            <datalist id="Listoflaptops">
+                                <option value="HP"></option>
+                                <option value="Lenovo"></option>
+                                <option value="Mac"></option>
+                                <option value="Dell"></option>
+                            </datalist>
+                             <div class="mt-4">
+                                 <label class="font-semibold" for="mac-select">Select with Optgroup</label>
+                                 <select id="mac-select" class="w-full mt-1 p-2 border rounded-md">
+                                     <optgroup label="Pro Laptops">
+                                        <option>Mackbook Pro 14</option>
+                                        <option>Mackbook Pro 16</option>
+                                     </optgroup>
+                                     <optgroup label="Air Laptops">
+                                        <option>Mackbook Air 13</option>
+                                        <option>Mackbook Air 15</option>
+                                     </optgroup>
+                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Calculation and Shapes -->
+                <fieldset class="bg-white p-6 rounded-xl shadow-lg">
+                    <legend>Calculation & SVG</legend>
+                     <form oninput="o.value=parseInt(a.value) + parseInt(b.value)" class="flex items-center space-x-2 text-lg">
+                        <input type="number" name="a" value="2" class="w-20 p-2 border rounded-md text-center">
+                        <span>+</span>
+                        <input type="number" name="b" value="5" class="w-20 p-2 border rounded-md text-center">
+                        <span>=</span>
+                        <output name="o" class="font-bold">7</output>
+                    </form>
+                    <div class="mt-6 text-center">
+                        <math xmlns="https://www.w3.org/1998/Math/MathML">
+                            <input type="text" placeholder="What shape is this?" class="w-full max-w-xs mb-2 p-2 border rounded-md text-center"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 400 400" class="mx-auto">
+                                <rect x="1" y="1" width="398" height="398" style="fill:none; stroke:#3b82f6; stroke-width:4" />
+                                <path d="M 100 100 L 300 100 L 200 300 z" style="fill:#ef4444; stroke:#3b82f6; stroke-width:3" />
+                            </svg>
+                        </math>
+                    </div>
+                </fieldset>
+                
+                <!-- Styled Table -->
+                <fieldset class="bg-white p-6 rounded-xl shadow-lg">
+                    <legend>Styled Table</legend>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-center border-collapse">
+                            <thead>
+                                <tr class="bg-gray-200">
+                                    <th class="p-3 border border-gray-300">Header 1</th>
+                                    <th class="p-3 border border-gray-300">Header 2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-blue-100">
+                                    <td class="p-3 border border-gray-300">One</td>
+                                    <td class="p-3 border border-gray-300">Two</td>
+                                </tr>
+                                <tr class="bg-gray-100">
+                                    <td class="p-3 border border-gray-300">Three</td>
+                                    <td class="p-3 border border-gray-300">Four</td>
+                                </tr>
+                                <tr class="bg-yellow-100">
+                                    <td class="p-3 border border-gray-300">Five</td>
+                                    <td class="p-3 border border-gray-300">Six</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for toggling between Sign In and Sign Up forms
+        const signinForm = document.getElementById('signin-form');
+        const signupForm = document.getElementById('signup-form');
+        const showSigninBtn = document.getElementById('show-signin-btn');
+        const showSignupBtn = document.getElementById('show-signup-btn');
+
+        showSigninBtn.addEventListener('click', () => {
+            signinForm.classList.remove('hidden');
+            signupForm.classList.add('hidden');
+            showSigninBtn.classList.add('text-indigo-600', 'border-indigo-600');
+            showSigninBtn.classList.remove('text-gray-500');
+            showSignupBtn.classList.add('text-gray-500');
+            showSignupBtn.classList.remove('text-indigo-600', 'border-indigo-600');
+        });
+
+        showSignupBtn.addEventListener('click', () => {
+            signupForm.classList.remove('hidden');
+            signinForm.classList.add('hidden');
+            showSignupBtn.classList.add('text-indigo-600', 'border-indigo-600');
+            showSignupBtn.classList.remove('text-gray-500');
+            showSigninBtn.classList.add('text-gray-500');
+            showSigninBtn.classList.remove('text-indigo-600', 'border-indigo-600');
+        });
+    </script>
+</body>
+</html>

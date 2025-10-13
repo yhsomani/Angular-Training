@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All-in-One Web Application</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for better typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for specific components and animations */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        /* --- Custom Animations --- */
+        /* Equalizer Animation */
+        .bar {
+            background: #4f46e5;
+            bottom: 0;
+            position: absolute;
+            width: 10px;
+            animation-duration: 1.2s;
+            animation-iteration-count: infinite;
+        }
+        .bar1 { left: 0px; animation-name: firstBar; }
+        .bar2 { left: 15px; animation-name: secondBar; }
+        .bar3 { left: 30px; animation-name: thirdBar; }
+
+        @keyframes firstBar {
+            0% { height: 10px; }
+            50% { height: 50px; }
+            100% { height: 10px; }
+        }
+        @keyframes secondBar {
+            0% { height: 50px; }
+            50% { height: 15px; }
+            100% { height: 50px; }
+        }
+        @keyframes thirdBar {
+            0% { height: 20px; }
+            40% { height: 10px; }
+            60% { height: 40px; }
+            100% { height: 20px; }
+        }
+        
+        /* Bouncing Ball Animation */
+        #bouncing-ball {
+            animation-name: bounce-anim;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes bounce-anim {
+            from {
+                background-color: #6366f1;
+                transform: translateX(0px);
+            }
+            to {
+                background-color: #a78bfa;
+                transform: translateX(200px);
+            }
+        }
+
+        /* Pseudo-class demo styles */
+        .pseudo-demo-container input:focus {
+            background-color: #e0e7ff;
+            border: 2px dashed #4f46e5;
+        }
+        .pseudo-demo-container a:link { color: #6d28d9; }
+        .pseudo-demo-container a:visited { color: #4c1d95; }
+        .pseudo-demo-container a:active { color: #c4b5fd; }
+        .pseudo-demo-container a:hover { font-size: 1.1rem; text-decoration: underline; }
+        .pseudo-demo-container tr td:first-child { font-weight: 600; color: #4f46e5; }
+    </style>
+</head>
+
+<body class="text-gray-800">
+    <!-- Main Application Container -->
+    <div class="min-h-screen flex flex-col">
+
+        <!-- Header -->
+        <header class="bg-white shadow-md sticky top-0 z-50">
+            <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center">
+                        <svg class="h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                        </svg>
+                        <span class="font-bold text-xl ml-2 text-indigo-600">Dashboard</span>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="#employees" class="nav-link text-white bg-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Employee Management</a>
+                            <a href="#tools" class="nav-link text-gray-600 hover:bg-indigo-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Tools & Widgets</a>
+                            <a href="#demos" class="nav-link text-gray-600 hover:bg-indigo-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">CSS/JS Demos</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+            <!-- Employee Management Section -->
+            <section id="employees" class="page-section">
+                <h1 class="text-3xl font-bold mb-6 text-gray-900">Employee Management</h1>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="flex justify-end mb-4">
+                        <button id="add-employee-btn" class="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 transition duration-300">Add Employee</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase">Emp ID</th>
+                                    <th class="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase">Name</th>
+                                    <th class="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase">Base Salary</th>
+                                    <th class="py-3 px-4 text-center text-xs font-semibold text-gray-600 uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employee-table-body" class="text-gray-700">
+                                <!-- JS will populate this -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tools & Widgets Section -->
+            <section id="tools" class="page-section hidden">
+                 <h1 class="text-3xl font-bold mb-6 text-gray-900">Tools & Widgets</h1>
+                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Calculator -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 class="text-xl font-bold mb-4">Simple Calculator</h2>
+                        <div class="space-y-4">
+                            <input type="number" id="calc-num1" placeholder="Enter first number" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-indigo-500">
+                            <input type="number" id="calc-num2" placeholder="Enter second number" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-indigo-500">
+                            <select id="calc-operator" class="w-full p-2 border rounded-md bg-white">
+                                <option value="+" selected>+</option>
+                                <option value="-">-</option>
+                                <option value="*">*</option>
+                                <option value="/">/</option>
+                            </select>
+                            <button id="calculate-btn" class="w-full bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition">Calculate</button>
+                            <div id="calc-result" class="mt-4 p-4 bg-gray-100 rounded-md text-center font-semibold text-lg">Result will appear here</div>
+                        </div>
+                    </div>
+                    <!-- Image Slider -->
+                     <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 class="text-xl font-bold mb-4">Image Slider</h2>
+                        <div id="slider-container" class="relative w-full h-64 bg-gray-200 rounded-md overflow-hidden mb-4 flex items-center justify-center">
+                            <!-- Image will be displayed here -->
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <button id="slider-prev" class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800">&lt; Prev</button>
+                            <button id="slider-next" class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800">Next &gt;</button>
+                        </div>
+                         <div>
+                             <input type="text" id="new-image-url" placeholder="Enter image URL to add" class="w-full p-2 border rounded-md mb-2">
+                             <button id="add-image-btn" class="w-full bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition">Add Image</button>
+                         </div>
+                    </div>
+                 </div>
+            </section>
+            
+            <!-- CSS/JS Demos Section -->
+            <section id="demos" class="page-section hidden">
+                <h1 class="text-3xl font-bold mb-6 text-gray-900">CSS & JavaScript Demos</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Bouncing Ball -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 class="text-xl font-bold mb-4">Interactive Ball</h2>
+                        <p class="text-sm text-gray-600 mb-4">Mouse over the ball to move it to a random position. Also has a CSS animation.</p>
+                        <div id="ball-container" class="relative h-64 bg-gray-100 rounded-md overflow-hidden">
+                            <div id="bouncing-ball" class="absolute w-12 h-12 rounded-full bg-indigo-500 cursor-pointer" style="top: 40%; left: 10px;"></div>
+                        </div>
+                    </div>
+                    <!-- CSS Equalizer -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center justify-center">
+                        <h2 class="text-xl font-bold mb-4">CSS Equalizer Animation</h2>
+                        <div class="bg-gray-100 p-8 rounded-lg">
+                             <div class="relative w-12 h-16">
+                                <div class="bar bar1"></div>
+                                <div class="bar bar2"></div>
+                                <div class="bar bar3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Pseudo-Classes -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg pseudo-demo-container">
+                        <h2 class="text-xl font-bold mb-4">CSS Pseudo-Classes Demo</h2>
+                        <table class="w-full">
+                            <tbody>
+                                <tr>
+                                    <td class="py-2">Input Field:</td>
+                                    <td class="py-2"><input type="text" placeholder="Focus on me" class="w-full p-1 border rounded-md outline-none"></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2">Links:</td>
+                                    <td class="py-2 space-x-4">
+                                        <a href="#demos">Link</a>
+                                        <a href="#">Visited</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Add Employee Modal -->
+    <div id="add-employee-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-6">Add New Employee</h2>
+            <form id="add-employee-form" class="space-y-4">
+                <input type="number" id="new-emp-id" placeholder="Employee ID" class="w-full p-3 border rounded-md focus:ring-2 focus:ring-indigo-500" required>
+                <input type="text" id="new-emp-name" placeholder="Employee Name" class="w-full p-3 border rounded-md focus:ring-2 focus:ring-indigo-500" required>
+                <input type="number" id="new-emp-salary" placeholder="Base Salary" class="w-full p-3 border rounded-md focus:ring-2 focus:ring-indigo-500" required>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" id="cancel-add-employee" class="bg-gray-300 text-gray-800 font-semibold py-2 px-6 rounded-lg hover:bg-gray-400">Cancel</button>
+                    <button type="submit" class="bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-700">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Salary Slip Modal -->
+    <div id="salary-slip-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold">Salary Slip</h2>
+                <button id="close-slip-modal" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            </div>
+            <div id="salary-slip-content">
+                <!-- Salary slip details will be injected here -->
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- NAVIGATION LOGIC ---
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.page-section');
+
+            function showSection(hash) {
+                sections.forEach(section => {
+                    if (`#${section.id}` === hash) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === hash) {
+                        link.classList.add('text-white', 'bg-indigo-600');
+                        link.classList.remove('text-gray-600');
+                    } else {
+                        link.classList.remove('text-white', 'bg-indigo-600');
+                        link.classList.add('text-gray-600');
+                    }
+                });
+            }
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = e.currentTarget.getAttribute('href');
+                    window.location.hash = targetId;
+                });
+            });
+
+            window.addEventListener('hashchange', () => {
+                 showSection(window.location.hash || '#employees');
+            });
+
+            // Initial load
+            showSection(window.location.hash || '#employees');
+
+
+            // --- EMPLOYEE MANAGEMENT ---
+            let employees = [
+                { empId: 101, name: "Yash", salary: 52083 },
+                { empId: 102, name: "Lokesh", salary: 73823 },
+                { empId: 103, name: "Ketan", salary: 81273 },
+                { empId: 104, name: "Yogesh", salary: 42389 },
+                { empId: 105, name: "Ramesh", salary: 97219 },
+            ];
+
+            const employeeTableBody = document.getElementById('employee-table-body');
+            const addEmployeeBtn = document.getElementById('add-employee-btn');
+            const addEmployeeModal = document.getElementById('add-employee-modal');
+            const cancelAddEmployeeBtn = document.getElementById('cancel-add-employee');
+            const addEmployeeForm = document.getElementById('add-employee-form');
+            const salarySlipModal = document.getElementById('salary-slip-modal');
+            const closeSlipModalBtn = document.getElementById('close-slip-modal');
+
+            function renderEmployeeTable() {
+                employeeTableBody.innerHTML = '';
+                if(employees.length === 0){
+                    employeeTableBody.innerHTML = '<tr><td colspan="4" class="text-center py-4">No employees found.</td></tr>';
+                    return;
+                }
+                employees.forEach(emp => {
+                    const row = document.createElement('tr');
+                    row.className = 'border-b hover:bg-gray-50';
+                    row.innerHTML = `
+                        <td class="py-3 px-4">${emp.empId}</td>
+                        <td class="py-3 px-4">${emp.name}</td>
+                        <td class="py-3 px-4">$${emp.salary.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-center">
+                            <button class="view-slip-btn text-indigo-600 hover:text-indigo-900 font-semibold" data-id="${emp.empId}">View Slip</button>
+                            <button class="delete-emp-btn text-red-600 hover:text-red-900 font-semibold ml-4" data-id="${emp.empId}">Delete</button>
+                        </td>
+                    `;
+                    employeeTableBody.appendChild(row);
+                });
+            }
+
+            function generateSalarySlipHTML(employee) {
+                const baseSalary = employee.salary;
+                const hra = baseSalary * 0.50;
+                const ca = baseSalary * 0.03;
+                const cea = baseSalary * 0.01;
+                const otherAllowance = baseSalary * 0.02;
+                const totalEarnings = baseSalary + hra + ca + cea + otherAllowance;
+                const epf = baseSalary * 0.05;
+                const incomeTax = baseSalary * 0.10;
+                const totalDeductions = epf + incomeTax;
+                const netSalary = totalEarnings - totalDeductions;
+
+                const month = new Date().toLocaleString('default', { month: 'long', year: 'numeric' });
+
+                return `
+                    <p class="mb-4"><strong>Employee:</strong> ${employee.name} (#${employee.empId})<br><strong>Month:</strong> ${month}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                           <h3 class="font-bold text-lg mb-2 text-green-800 border-b pb-2">Earnings</h3>
+                           <div class="space-y-2">
+                                <p class="flex justify-between"><span>Base Salary:</span> <span>$${baseSalary.toFixed(2)}</span></p>
+                                <p class="flex justify-between"><span>HRA (50%):</span> <span>$${hra.toFixed(2)}</span></p>
+                                <p class="flex justify-between"><span>CA (3%):</span> <span>$${ca.toFixed(2)}</span></p>
+                                <p class="flex justify-between"><span>CEA (1%):</span> <span>$${cea.toFixed(2)}</span></p>
+                                <p class="flex justify-between"><span>Other Allowance (2%):</span> <span>$${otherAllowance.toFixed(2)}</span></p>
+                                <p class="flex justify-between font-bold border-t pt-2 mt-2"><span>Total Earnings:</span> <span>$${totalEarnings.toFixed(2)}</span></p>
+                           </div>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                           <h3 class="font-bold text-lg mb-2 text-red-800 border-b pb-2">Deductions</h3>
+                           <div class="space-y-2">
+                                <p class="flex justify-between"><span>EPF Contribution (5%):</span> <span>$${epf.toFixed(2)}</span></p>
+                                <p class="flex justify-between"><span>Income Tax (10%):</span> <span>$${incomeTax.toFixed(2)}</span></p>
+                                <p class="flex justify-between font-bold border-t pt-2 mt-2"><span>Total Deductions:</span> <span>$${totalDeductions.toFixed(2)}</span></p>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 p-4 bg-indigo-100 rounded-lg text-center">
+                        <h3 class="font-bold text-xl text-indigo-800">Net Salary: $${netSalary.toFixed(2)}</h3>
+                    </div>
+                `;
+            }
+            
+            addEmployeeBtn.addEventListener('click', () => addEmployeeModal.classList.remove('hidden'));
+            cancelAddEmployeeBtn.addEventListener('click', () => addEmployeeModal.classList.add('hidden'));
+
+            addEmployeeForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const empId = parseInt(document.getElementById('new-emp-id').value);
+                const name = document.getElementById('new-emp-name').value;
+                const salary = parseFloat(document.getElementById('new-emp-salary').value);
+                
+                if (employees.some(emp => emp.empId === empId)) {
+                    // Using a simple notification instead of alert
+                    document.getElementById('calc-result').textContent = "Employee ID already exists.";
+                    setTimeout(() => document.getElementById('calc-result').textContent = "Result will appear here", 3000);
+                    return;
+                }
+
+                employees.push({ empId, name, salary });
+                renderEmployeeTable();
+                addEmployeeForm.reset();
+                addEmployeeModal.classList.add('hidden');
+            });
+            
+            employeeTableBody.addEventListener('click', (e) => {
+                const empId = parseInt(e.target.dataset.id);
+
+                if (e.target.classList.contains('view-slip-btn')) {
+                    const employee = employees.find(emp => emp.empId === empId);
+                    document.getElementById('salary-slip-content').innerHTML = generateSalarySlipHTML(employee);
+                    salarySlipModal.classList.remove('hidden');
+                }
+
+                if (e.target.classList.contains('delete-emp-btn')) {
+                    employees = employees.filter(emp => emp.empId !== empId);
+                    renderEmployeeTable();
+                }
+            });
+
+            closeSlipModalBtn.addEventListener('click', () => salarySlipModal.classList.add('hidden'));
+
+            // --- CALCULATOR LOGIC ---
+            document.getElementById('calculate-btn').addEventListener('click', () => {
+                const num1 = parseFloat(document.getElementById('calc-num1').value);
+                const num2 = parseFloat(document.getElementById('calc-num2').value);
+                const operator = document.getElementById('calc-operator').value;
+                const resultDiv = document.getElementById('calc-result');
+
+                if(isNaN(num1) || isNaN(num2)) {
+                    resultDiv.textContent = "Please enter valid numbers.";
+                    return;
+                }
+                
+                let result;
+                switch(operator) {
+                    case '+': result = num1 + num2; break;
+                    case '-': result = num1 - num2; break;
+                    case '*': result = num1 * num2; break;
+                    case '/': result = num2 !== 0 ? num1 / num2 : "Cannot divide by zero"; break;
+                    default: result = "Invalid operation";
+                }
+                resultDiv.textContent = `Result: ${result}`;
+            });
+
+            // --- IMAGE SLIDER ---
+            const sliderImages = [
+                "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?q=80&w=800",
+                "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=800",
+                "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=800",
+                "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?q=80&w=800"
+            ];
+            let currentImageIndex = 0;
+            const sliderContainer = document.getElementById('slider-container');
+
+            function displaySliderImage() {
+                sliderContainer.innerHTML = `<img src="${sliderImages[currentImageIndex]}" class="w-full h-full object-cover" alt="Food Image">`;
+            }
+
+            document.getElementById('slider-prev').addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex - 1 + sliderImages.length) % sliderImages.length;
+                displaySliderImage();
+            });
+
+            document.getElementById('slider-next').addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex + 1) % sliderImages.length;
+                displaySliderImage();
+            });
+            
+            document.getElementById('add-image-btn').addEventListener('click', () => {
+                const newUrlInput = document.getElementById('new-image-url');
+                if (newUrlInput.value) {
+                    sliderImages.push(newUrlInput.value);
+                    currentImageIndex = sliderImages.length - 1;
+                    displaySliderImage();
+                    newUrlInput.value = '';
+                }
+            });
+
+
+            // --- BOUNCING BALL DEMO ---
+            const ball = document.getElementById('bouncing-ball');
+            const ballContainer = document.getElementById('ball-container');
+
+            ball.addEventListener('mouseover', () => {
+                const containerWidth = ballContainer.offsetWidth;
+                const containerHeight = ballContainer.offsetHeight;
+                const ballSize = ball.offsetWidth;
+
+                const randomTop = Math.floor(Math.random() * (containerHeight - ballSize));
+                const randomLeft = Math.floor(Math.random() * (containerWidth - ballSize));
+
+                ball.style.top = `${randomTop}px`;
+                ball.style.left = `${randomLeft}px`;
+            });
+            
+            // Initial render calls
+            renderEmployeeTable();
+            displaySliderImage();
+
+        });
+    </script>
+</body>
+</html>
