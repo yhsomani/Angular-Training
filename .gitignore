@@ -1,0 +1,3 @@
+# Ignore PDF files (case-insensitive)
+*.pdf
+*.PDF
