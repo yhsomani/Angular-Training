@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Concepts Combined</title>
+    <style>
+        /* General Body Styles */
+        body {
+            margin: 0;
+            background-color: #f0f2f5;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        /* Navigation Bar Styles */
+        nav {
+            background-color: #132440;
+            padding: 0 15%;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-evenly;
+            height: 50px;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        nav li {
+            line-height: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        nav a {
+            color: #3B9797;
+            text-decoration: none;
+            padding: 6px 12px;
+            display: block;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #3B9797;
+            color: white;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            color: #0d1a2f;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #52d3d3;
+            -webkit-text-stroke-width: 0.5px;
+            -webkit-text-stroke-color: #132440;
+        }
+
+
+        /* Card Layout Styles */
+        .parent {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            margin: 10px;
+            border-radius: 25px;
+            padding: 20px;
+            text-align: justify;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            border-radius: 25px;
+            width: 100%;
+            max-width: 60%;
+            margin: 0 auto 15px auto;
+            display: block;
+        }
+
+        .card p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #3B3B3B;
+            text-align: justify;
+        }
+
+        /* Form Builder Styles */
+        #form-builder-section {
+            background-color: #ffffff;
+            margin: 20px auto;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 800px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #form-builder-section h2 {
+            color: #4CAF50;
+        }
+
+        .form-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        #form-builder-section input[type="text"],
+        #form-builder-section select,
+        #form-builder-section button {
+            margin: 5px;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+        }
+
+        #form-builder-section select,
+        #form-builder-section button {
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #form-builder-section button:hover {
+            background-color: #45a049;
+        }
+
+        #form-builder-section table {
+            width: 100%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #form-builder-section th,
+        #form-builder-section td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+
+        #form-builder-section th {
+            background-color: #e9f5e9;
+        }
+
+        #form-builder-section td input {
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            width: calc(100% - 22px);
+        }
+
+        /* SCSS Roadmap Styles */
+        #roadmap-section {
+            max-width: 900px;
+            margin: 20px auto;
+        }
+
+        #roadmap-section table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #roadmap-section td {
+            padding: 5px;
+            text-align: left;
+        }
+
+        details {
+            margin: 5px auto;
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f9f9f9;
+            cursor: pointer;
+        }
+
+        summary {
+            font-weight: bold;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        code,
+        monospace {
+            font-family: monospace;
+            background: #e4e4e4;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 90%;
+        }
+
+        /* SASS/SCSS Demo Styles */
+        .description-demo {
+            color: red;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-top: 20px;
+            background-color: #fff;
+        }
+
+        .description-demo .subClass {
+            color: green;
+            font-weight: bold;
+        }
+
+        .description-demo .btn {
+            color: blue;
+            border: 2px solid blue;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .description-demo .btn:hover {
+            animation: myAnimation 2s ease-in-out forwards;
+            background-color: orange;
+            color: white;
+            border-color: orange;
+        }
+
+        .text-demo {
+            color: red;
+        }
+
+        .feedback-message {
+            color: green;
+            margin-top: 10px;
+            font-weight: bold;
+            min-height: 20px;
+        }
+
+        @keyframes myAnimation {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Profile</a></li>
+        </ul>
+    </nav>
+
+    <section id="card-section">
+        <h1>Image Cards Showcase</h1>
+        <div class="parent">
+            <div class="card">
+                <img src="https://4kwallpapers.com/images/walls/thumbs_3t/24181.jpg" alt="Abstract Wallpaper 1" />
+                <p>
+                    This is a demonstration of a card layout. It combines an image with descriptive text, styled with
+                    rounded corners and shadows to create a modern, clean look. This component is flexible and can be
+                    used to display various types of content.
+                </p>
+            </div>
+            <div class="card">
+                <img src="https://4kwallpapers.com/images/walls/thumbs_3t/24058.jpg" alt="Abstract Wallpaper 2" />
+                <p>
+                    Here's another example of the card component. The flexbox container allows for easy alignment and
+                    distribution of these cards, ensuring they are responsive and adapt well to different screen sizes,
+                    from mobile devices to desktops.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="form-builder-section">
+        <h2>Simple Form Builder</h2>
+        <p>Select an element type, enter a label, and click "Add Element" to dynamically add it to the table below.</p>
+        <div class="form-controls">
+            <input type="text" id="labelText" placeholder="Enter label text">
+            <select id="formType">
+                <option value="text">Text Input</option>
+                <option value="number">Number Input</option>
+                <option value="email">Email Input</option>
+                <option value="password">Password Input</option>
+                <option value="date">Date Input</option>
+            </select>
+            <button id="addElement">Add Element</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Label</th>
+                    <th>Element</th>
+                </tr>
+            </thead>
+            <tbody id="generatedTable"></tbody>
+        </table>
+    </section>
+
+    <section id="sass-demo-section">
+        <h2>SASS/SCSS Concepts Demo</h2>
+        <p class="text-demo">This text is styled using a SASS variable for the color.</p>
+        <div class="description-demo">
+            This is the root element.
+            <div class="subClass">
+                This is a nested subclass, demonstrating the nesting feature of SASS/SCSS.
+            </div>
+            <button class="btn">
+                Hover Over Me
+            </button>
+            <p class="feedback-message"></p>
+        </div>
+    </section>
+
+    <section id="roadmap-section">
+        <h2>SCSS Learning Roadmap</h2>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <details>
+                            <summary>1. Introduction to SCSS</summary>
+                            <ul>
+                                <li>SCSS (Sassy CSS) is a powerful CSS preprocessor.</li>
+                                <li>It makes writing and maintaining stylesheets more efficient.</li>
+                            </ul>
+                        </details>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <details>
+                            <summary>2. Benefits Over Regular CSS</summary>
+                            <ul>
+                                <li><strong>Variables:</strong> For reusable values like colors and fonts.</li>
+                                <li><strong>Nesting:</strong> To write CSS in a more readable, hierarchical way.</li>
+                                <li><strong>Partials & Imports:</strong> To organize code into modular files.</li>
+                                <li><strong>Mixins & Functions:</strong> For reusable blocks of styles.</li>
+                            </ul>
+                        </details>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <details>
+                            <summary>3. Core Concepts</summary>
+                            <ul>
+                                <li>Variables:
+                                    <pre><code>$primary-color: #3498db;</code></pre>
+                                </li>
+                                <li>Nesting:
+                                    <pre><code>nav { ul { li { ... } } }</code></pre>
+                                </li>
+                                <li>Mixins:
+                                    <pre><code>@mixin flex-center { display: flex; justify-content: center; } .container { @include flex-center; }</code></pre>
+                                </li>
+                            </ul>
+                        </details>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- JavaScript for the Simple Form Builder ---
+            const addButton = document.getElementById("addElement");
+            const formType = document.getElementById("formType");
+            const tableBody = document.getElementById("generatedTable");
+            const labelTextInput = document.getElementById("labelText");
+
+            addButton.addEventListener('click', function () {
+                const selectedType = formType.value;
+                const labelText = labelTextInput.value;
+
+                if (labelText.trim() !== "") {
+                    const newRow = document.createElement("tr");
+
+                    const labelCell = document.createElement("td");
+                    labelCell.textContent = labelText;
+
+                    const elementCell = document.createElement("td");
+                    const input = document.createElement("input");
+                    input.type = selectedType;
+                    input.placeholder = "Enter " + selectedType + " here";
+                    elementCell.appendChild(input);
+
+                    newRow.appendChild(labelCell);
+                    newRow.appendChild(elementCell);
+                    tableBody.appendChild(newRow);
+
+                    labelTextInput.value = ''; // Clear input after adding
+                    labelTextInput.style.borderColor = '#ccc';
+                } else {
+                    // Indicate that a label is required
+                    labelTextInput.style.borderColor = 'red';
+                }
+            });
+
+            // --- JavaScript for the SASS/SCSS Demo Button ---
+            const demoButton = document.querySelector('.description-demo .btn');
+            const feedbackMessage = document.querySelector('.feedback-message');
+
+            demoButton.addEventListener('click', () => {
+                feedbackMessage.textContent = 'Button clicked! The hover animation still works.';
+
+                setTimeout(() => {
+                    feedbackMessage.textContent = '';
+                }, 3000); // Message disappears after 3 seconds
+            });
+        });
+    </script>
+</body>
+
+</html>
