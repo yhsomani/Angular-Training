@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive JavaScript Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+        .option-button:hover {
+            background-color: #f0f0f0;
+        }
+        .example-card {
+            transition: transform 0.2s;
+        }
+        .example-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-4xl font-bold text-center text-gray-700">Comprehensive JavaScript Showcase</h1>
+            <p class="text-center text-gray-500 mt-2">Merging multiple concepts into a single interactive application.</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8 space-y-12">
+        <!-- Live Clock -->
+        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+            <h2 class="text-2xl font-semibold mb-2">Live Clock</h2>
+            <div id="clock" class="text-5xl font-mono text-indigo-600"></div>
+        </div>
+        
+        <!-- User Data Section -->
+        <section id="user-data" class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4 border-b pb-2">User Data Viewer</h2>
+            <div class="flex flex-col md:flex-row md:items-center gap-4">
+                <label for="userNames" class="font-medium">Select a User:</label>
+                <select name="userNames" id="userNames" class="p-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 flex-grow">
+                    <option value="">Select User</option>
+                </select>
+            </div>
+            <div class="mt-6 overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 bg-gray-200 border-b font-semibold">Id</th>
+                            <th class="py-2 px-4 bg-gray-200 border-b font-semibold">First Name</th>
+                            <th class="py-2 px-4 bg-gray-200 border-b font-semibold">Last Name</th>
+                            <th class="py-2 px-4 bg-gray-200 border-b font-semibold">Email</th>
+                            <th class="py-2 px-4 bg-gray-200 border-b font-semibold">Department</th>
+                            <th class="py-2 px-4 bg-gray-200 border-b font-semibold">Position</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userData-table-body">
+                         <!-- Rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz-section" class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Simple Quiz</h2>
+            <div id="quiz-box" class="text-center">
+                <p id="question-text" class="text-xl mb-4">Loading question...</p>
+                <div id="options-box" class="space-y-2"></div>
+                <p id="timer" class="text-lg mt-4">Time left: <span id="time-left" class="font-bold">10</span>s</p>
+                <button id="next-question-btn" class="mt-4 bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition">Next</button>
+            </div>
+            <div id="score-box" class="hidden text-center">
+                 <p id="score-text" class="text-2xl font-bold"></p>
+                 <button id="restart-quiz-btn" class="mt-4 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition">Restart Quiz</button>
+            </div>
+        </section>
+
+        <!-- JavaScript Examples Section -->
+        <section id="js-examples" class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Interactive JavaScript Examples</h2>
+            <div id="examples-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Example cards will be inserted here -->
+            </div>
+        </section>
+        
+        <!-- Data Manipulation Section -->
+        <section id="data-manipulation" class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Data Fetching & Manipulation</h2>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="font-medium text-lg">Original Data:</h3>
+                    <pre class="bg-gray-100 p-2 rounded-md text-sm overflow-x-auto"><code id="original-data-code"></code></pre>
+                </div>
+                <div>
+                    <button id="map-btn" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition">Show Salaries (map)</button>
+                    <pre class="hidden bg-gray-100 p-2 mt-2 rounded-md text-sm overflow-x-auto"><code id="map-output"></code></pre>
+                </div>
+                <div>
+                    <button id="filter-btn" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition">Filter Marketing Dept (filter)</button>
+                    <pre class="hidden bg-gray-100 p-2 mt-2 rounded-md text-sm overflow-x-auto"><code id="filter-output"></code></pre>
+                </div>
+                 <div>
+                    <button id="reduce-btn" class="bg-purple-500 text-white py-2 px-4 rounded-md hover:bg-purple-600 transition">Calculate Total Salary (reduce)</button>
+                    <pre class="hidden bg-gray-100 p-2 mt-2 rounded-md text-sm overflow-x-auto"><code id="reduce-output"></code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- File Handling Section -->
+        <section id="file-handling" class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4 border-b pb-2">File Handling</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="font-medium text-lg mb-2">Read Local CSV File</h3>
+                    <input type="file" id="fileInput" accept=".csv" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"/>
+                    <pre id="csv-output" class="bg-gray-100 p-2 mt-4 rounded-md text-sm h-48 overflow-auto"></pre>
+                </div>
+                <div>
+                     <h3 class="font-medium text-lg mb-2">JSON to CSV Conversion</h3>
+                     <p class="text-sm text-gray-600 mb-2">Convert the user data to a CSV string and download it.</p>
+                     <button id="download-csv-btn" class="bg-cyan-500 text-white py-2 px-4 rounded-md hover:bg-cyan-600 transition">Download as CSV</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal for alerts, confirms, prompts -->
+    <div id="customModal" class="modal hidden">
+        <div class="modal-content text-center">
+            <p id="modalText" class="mb-4"></p>
+            <div id="modalInputContainer" class="hidden mb-4">
+                <input type="text" id="modalInput" class="p-2 border rounded-md w-full">
+            </div>
+            <div id="modalButtons" class="flex justify-center gap-4">
+                <!-- Buttons will be added dynamically -->
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- Data ---
+        // NOTE: The JSON data from your files has been embedded here as constants
+        // to make this a self-contained HTML file.
+        const userData = [
+          { "id": 1, "firstName": "Alice", "lastName": "Johnson", "email": "alice.johnson@example.com", "department": "Marketing", "position": "Marketing Manager" },
+          { "id": 2, "firstName": "Bob", "lastName": "Smith", "email": "bob.smith@example.com", "department": "Engineering", "position": "Software Engineer" },
+          { "id": 3, "firstName": "Charlie", "lastName": "Brown", "email": "charlie.brown@example.com", "department": "Human Resources", "position": "HR Specialist" },
+          { "id": 4, "firstName": "Diana", "lastName": "Prince", "email": "diana.prince@example.com", "department": "Sales", "position": "Sales Representative" },
+          { "id": 5, "firstName": "Ethan", "lastName": "Hunt", "email": "ethan.hunt@example.com", "department": "Finance", "position": "Financial Analyst" },
+          { "id": 6, "firstName": "Fiona", "lastName": "Gallagher", "email": "fiona.gallagher@example.com", "department": "Operations", "position": "Operations Manager" },
+          { "id": 7, "firstName": "George", "lastName": "Costanza", "email": "george.costanza@example.com", "department": "IT", "position": "IT Support Specialist" },
+          { "id": 8, "firstName": "Hannah", "lastName": "Abbott", "email": "hannah.abbott@example.com", "department": "Marketing", "position": "Digital Marketing Specialist" },
+          { "id": 9, "firstName": "Ian", "lastName": "Malcolm", "email": "ian.malcolm@example.com", "department": "Research & Development", "position": "Research Scientist" },
+          { "id": 10, "firstName": "Jessica", "lastName": "Jones", "email": "jessica.jones@example.com", "department": "Legal", "position": "Legal Counsel" }
+        ];
+
+        const quizData = {
+          "quiz": [
+            { "question": "What does HTML stand for?", "options": ["Hyper Trainer Marking Language", "Hyper Text Marketing Language", "Hyper Text Markup Language", "Hyperlink Text Management Language"], "answer": "Hyper Text Markup Language" },
+            { "question": "Which data structure uses FIFO (First In, First Out) principle?", "options": ["Stack", "Queue", "Tree", "Graph"], "answer": "Queue" },
+            { "question": "Which keyword is used to define a function in Python?", "options": ["func", "function", "define", "def"], "answer": "def" },
+            { "question": "In Java, which of these is not a primitive data type?", "options": ["int", "float", "boolean", "String"], "answer": "String" },
+            { "question": "What is the output of: console.log(typeof null) in JavaScript?", "options": ["\"object\"", "\"null\"", "\"undefined\"", "\"number\""], "answer": "\"object\"" }
+          ]
+        };
+
+        // --- User Data Display Logic ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const userSelect = document.getElementById("userNames");
+            const tableBody = document.getElementById('userData-table-body');
+            
+            userData.forEach(emp => {
+                const option = document.createElement('option');
+                option.value = emp.firstName;
+                option.textContent = `${emp.firstName} ${emp.lastName}`;
+                userSelect.appendChild(option);
+            });
+
+            userSelect.addEventListener("change", function () {
+                const selectedUserName = this.value;
+                tableBody.innerHTML = ''; // Clear previous entries
+
+                if (selectedUserName) {
+                    const myEmpData = userData.find(emp => emp.firstName === selectedUserName);
+                    if (myEmpData) {
+                        const row = `
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-4 border-b">${myEmpData.id}</td>
+                                <td class="py-2 px-4 border-b">${myEmpData.firstName}</td>
+                                <td class="py-2 px-4 border-b">${myEmpData.lastName}</td>
+                                <td class="py-2 px-4 border-b">${myEmpData.email}</td>
+                                <td class="py-2 px-4 border-b">${myEmpData.department}</td>
+                                <td class="py-2 px-4 border-b">${myEmpData.position}</td>
+                            </tr>`;
+                        tableBody.innerHTML = row;
+                    }
+                }
+            });
+        });
+
+        // --- Quiz Logic ---
+        let currentQuestion = 0;
+        let score = 0;
+        let timerInterval;
+        const quiz = quizData.quiz;
+        let questionInProgress = false;
+
+        function showQuestion() {
+            if (currentQuestion >= quiz.length) return;
+            questionInProgress = true;
+            
+            let question = quiz[currentQuestion];
+            clearInterval(timerInterval);
+
+            document.getElementById("question-text").innerText = question.question;
+            let optionsBox = document.getElementById("options-box");
+            optionsBox.innerHTML = "";
+
+            question.options.forEach(option => {
+                let button = document.createElement("button");
+                button.innerText = option;
+                button.classList.add('option-button', 'w-full', 'p-2', 'border', 'rounded-md', 'text-left', 'transition');
+                button.onclick = function () {
+                    if (option === question.answer) {
+                        score++;
+                    }
+                    nextQuestion();
+                };
+                optionsBox.appendChild(button);
+            });
+
+            startTimer();
+        }
+
+        function startTimer() {
+            let timeLeft = 10;
+            const countdownElement = document.getElementById("time-left");
+            countdownElement.textContent = timeLeft;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                countdownElement.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    nextQuestion();
+                }
+            }, 1000);
+        }
+
+        function nextQuestion() {
+            if (!questionInProgress) return; // Prevents double execution from click + timer
+            questionInProgress = false;
+            clearInterval(timerInterval);
+            currentQuestion++;
+            if (currentQuestion < quiz.length) {
+                showQuestion();
+            } else {
+                showScore();
+            }
+        }
+        
+        function showScore() {
+            document.getElementById("quiz-box").classList.add("hidden");
+            const scoreBox = document.getElementById("score-box");
+            scoreBox.classList.remove("hidden");
+            document.getElementById("score-text").innerText = `Your score is: ${score} out of ${quiz.length}`;
+        }
+        
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("quiz-box").classList.remove("hidden");
+            document.getElementById("score-box").classList.add("hidden");
+            showQuestion();
+        }
+        
+        document.getElementById('next-question-btn').addEventListener('click', nextQuestion);
+        document.getElementById('restart-quiz-btn').addEventListener('click', restartQuiz);
+
+        // Start Quiz on load
+        showQuestion();
+
+
+        // --- JavaScript Examples Logic ---
+        const examples = [
+            { title: "document.write", code: `document.write("<h1>Heading</h1><p>Paragraph.</p>");`, action: (outputEl) => { outputEl.innerHTML = "<h1>Heading</h1><p>Paragraph.</p>"; } },
+            { title: "Variables", code: `var firstname = "Hege";\noutputEl.innerText = firstname;\nfirstname = "Tove";\noutputEl.innerText += "\\n" + firstname;`, action: (outputEl) => { var firstname="Hege"; outputEl.innerText=firstname; firstname="Tove"; outputEl.innerText += "\n" + firstname; } },
+            { title: "If Statement", code: `var time = new Date().getHours();\nif (time < 10) { outputEl.innerText = "Good morning"; } else { outputEl.innerText = "Good day"; }`, action: (outputEl) => { var time = new Date().getHours(); if (time < 10) { outputEl.innerText = "Good morning"; } else { outputEl.innerText = "Good day"; }} },
+            { title: "Switch Statement", code: `var theDay = new Date().getDay();\nswitch (theDay) {\n  case 5: outputEl.innerText = "Finally Friday"; break;\n  case 6: outputEl.innerText = "Super Saturday"; break;\n  case 0: outputEl.innerText = "Sleepy Sunday"; break;\n  default: outputEl.innerText = "Looking forward to the weekend!";\n}`, action: (outputEl) => { var d=new Date(); var theDay=d.getDay(); switch(theDay){case 5:outputEl.innerText="Finally Friday";break;case 6:outputEl.innerText="Super Saturday";break;case 0:outputEl.innerText="Sleepy Sunday";break;default:outputEl.innerText="I'm really looking forward to this weekend!";} } },
+            { title: "Alert Box (Modal)", code: `customAlert("Hello! I am a custom alert box!");`, action: () => customAlert("Hello! I am a custom alert box!") },
+            { title: "Confirm Box (Modal)", code: `customConfirm("Press a button!").then(result => {\n  outputEl.innerText = "You pressed " + (result ? "OK!" : "Cancel!");\n});`, action: (outputEl) => customConfirm("Press a button!").then(r => {outputEl.innerText = "You pressed " + (r ? "OK!" : "Cancel!");}) },
+            { title: "Prompt Box (Modal)", code: `customPrompt("Please enter your name", "Harry Potter").then(name => {\n  if (name !== null && name !== "") {\n    outputEl.innerText = "Hello " + name + "! How are you today?";\n  }\n});`, action: (outputEl) => customPrompt("Please enter your name", "Harry Potter").then(name => {if(name!=null && name!="") {outputEl.innerText = "Hello " + name + "! How are you today?";}}) },
+            { title: "Function with Argument", code: `function myfunction(txt) {\n  customAlert(txt);\n}\nmyfunction('Hello from a function!');`, action: () => { function myfunction(txt){customAlert(txt);} myfunction('Hello from a function!'); } },
+            { title: "Function with Return Value", code: `function product(a, b) {\n  return a * b;\n}\noutputEl.innerText = product(4, 3);`, action: (outputEl) => { function product(a,b){return a*b;} outputEl.innerText = product(4,3); } },
+            { title: "For Loop", code: `let text = "";\nfor (let i = 0; i <= 5; i++) {\n  text += "The number is " + i + "\\n";\n}\noutputEl.innerText = text;`, action: (outputEl) => { let text = ""; for (let i=0;i<=5;i++) { text += "The number is " + i + "\\n"; } outputEl.innerText = text; } },
+            { title: "While Loop", code: `let text = ""; let i = 0;\nwhile (i <= 5) {\n  text += "The number is " + i + "\\n";\n  i++;\n}\noutputEl.innerText = text;`, action: (outputEl) => { let text = ""; let i=0; while (i<=5) { text += "The number is " + i + "\\n"; i++; } outputEl.innerText = text; } },
+            { title: "For...In Loop (Object)", code: `const person = {fname: "John", lname: "Doe", age: 25};\nlet text = "";\nfor (let x in person) {\n  text += person[x] + " ";\n}\noutputEl.innerText = text;`, action: (outputEl) => { const person={fname:"John",lname:"Doe",age:25}; let txt=""; for(let x in person){txt += person[x] + " ";} outputEl.innerText = txt; } },
+            { title: "Try...Catch Error", code: `try {\n  adddlert("Welcome guest!");\n} catch(err) {\n  outputEl.innerText = "Error: " + err.message;\n}`, action: (outputEl) => { try {adddlert("Welcome guest!");} catch(err) { outputEl.innerText = "There was an error on this page.\\n" + "Error description: " + err.message;} } },
+            { title: "setTimeout", code: `outputEl.innerText = "Waiting 3 seconds...";\nsetTimeout(() => {\n  outputEl.innerText = "Hello after 3 seconds!";\n}, 3000);`, action: (outputEl) => { outputEl.innerText = "Waiting 3 seconds..."; setTimeout(() => { outputEl.innerText = "Hello after 3 seconds!"; }, 3000); } },
+            { title: "setInterval/clearInterval", code: `let c = 0; let t;\nfunction timedCount() {\n  outputEl.innerText = c;\n  c++;\n  t = setTimeout(timedCount, 1000);\n}\ntimedCount();\n// Stop button would call clearTimeout(t);`, action: (outputEl, card) => { let c=0; let t; let timer_is_on=0; function timedCount(){outputEl.innerText = "Count: "+ c; c=c+1; t=setTimeout(timedCount,1000); } function doTimer(){if (!timer_is_on){timer_is_on=1;timedCount();}} function stopCount(){clearTimeout(t);timer_is_on=0; outputEl.innerText += ' (stopped)';} doTimer(); const stopBtn = card.querySelector('.stop-btn'); if(stopBtn) {stopBtn.onclick = stopCount;} } },
+            { title: "Object Constructor", code: `function Person(first, last, age) {\n  this.firstName = first;\n  this.lastName = last;\n  this.age = age;\n}\nconst myFather = new Person("John", "Doe", 50);\noutputEl.innerText = myFather.firstName + " is " + myFather.age;`, action: (outputEl) => { function person(firstname,lastname,age,eyecolor){this.firstname=firstname; this.lastname=lastname; this.age=age; this.eyecolor=eyecolor;} const myFather=new person("John","Doe",50,"blue"); outputEl.innerText = myFather.firstname + " is " + myFather.age + " years old."; } },
+            { title: "String Length", code: `let txt = "Hello World!";\noutputEl.innerText = "Length: " + txt.length;`, action: (outputEl) => { let txt = "Hello World!"; outputEl.innerText = "Length: " + txt.length; } },
+            { title: "Array Concat", code: `const parents = ["Jani", "Tove"];\nconst children = ["Cecilie", "Lone"];\nconst family = parents.concat(children);\noutputEl.innerText = family.join(', ');`, action: (outputEl) => { const parents = ["Jani", "Tove"]; const children = ["Cecilie", "Lone"]; const family = parents.concat(children); outputEl.innerText = family; } },
+            { title: "Array Join", code: `const fruits = ["Banana", "Orange", "Apple"];\noutputEl.innerText = fruits.join(" and ");`, action: (outputEl) => { const fruits = ["Banana", "Orange", "Apple", "Mango"]; outputEl.innerText = fruits.join(" and "); } },
+            { title: "Array Push/Pop", code: `const fruits = ["Banana", "Orange"];\nfruits.push("Kiwi"); // Add\noutputEl.innerText = "After push: " + fruits.join(', ');\nfruits.pop(); // Remove\noutputEl.innerText += "\\nAfter pop: " + fruits.join(', ');`, action: (outputEl) => { const fruits = ["Banana", "Orange", "Apple", "Mango"]; fruits.push("Kiwi"); outputEl.innerText = "After push: " + fruits.join(', ') + "\\nPopped: " + fruits.pop() + "\\nNow: " + fruits.join(', ');} },
+            { title: "Array Sort", code: `const fruits = ["Banana", "Orange", "Apple", "Mango"];\noutputEl.innerText = fruits.sort().join(', ');`, action: (outputEl) => { const fruits = ["Banana", "Orange", "Apple", "Mango"]; outputEl.innerText = fruits.sort(); } },
+            { title: "Numeric Sort", code: `function sortNumber(a, b) { return a - b; }\nconst n = [10, 5, 40, 25, 100, 1];\noutputEl.innerText = n.sort(sortNumber).join(', ');`, action: (outputEl) => { function sortNumber(a, b){return a - b;} const n = [10, 5, 40, 25, 100, 1]; outputEl.innerText = n.sort(sortNumber); } },
+            { title: "Math.max/min", code: `outputEl.innerText = "Max: " + Math.max(0, 150, 30, 20, 38);\noutputEl.innerText += "\\nMin: " + Math.min(0, 150, 30, 20, 38);`, action: (outputEl) => { outputEl.innerText = "Max: " + Math.max(0,150,30,20,38) + "\\nMin: " + Math.min(0,150,30,20,38);} },
+            { title: "Temp Converter", code: `<div class="space-y-2">\n  <input id="celsius" class="border p-1 rounded" placeholder="Celsius" onkeyup="convertTemp('C')">\n  <input id="fahrenheit" class="border p-1 rounded" placeholder="Fahrenheit" onkeyup="convertTemp('F')">\n</div>`, action: (outputEl) => { outputEl.innerHTML = `<div class="space-y-2"><input id="celsius" class="border p-1 rounded" placeholder="Celsius" onkeyup="convertTemp('C')"><span> degrees Celsius equals </span><input id="fahrenheit" class="border p-1 rounded" placeholder="Fahrenheit" onkeyup="convertTemp('F')"><span> degrees Fahrenheit</span></div>` } },
+        ];
+        
+        const examplesContainer = document.getElementById('examples-container');
+        examples.forEach((example, index) => {
+            const card = document.createElement('div');
+            card.className = 'example-card bg-gray-50 border rounded-lg p-4 shadow-sm flex flex-col';
+            
+            const stopButtonHTML = example.title === 'setInterval/clearInterval' ? '<button class="stop-btn mt-2 bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition">Stop</button>' : '';
+
+            card.innerHTML = `
+                <div>
+                    <h3 class="font-semibold text-lg mb-2">${example.title}</h3>
+                    <pre class="bg-gray-200 text-sm p-2 rounded-md overflow-x-auto"><code>${example.code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>
+                </div>
+                <div class="mt-auto pt-2">
+                    <div class="flex items-center gap-2">
+                        <button class="run-btn mt-2 bg-gray-700 text-white py-1 px-3 rounded hover:bg-gray-800 transition">Run</button>
+                        ${stopButtonHTML}
+                    </div>
+                    <div class="output mt-2 p-2 border-t text-gray-600 min-h-[40px]"></div>
+                </div>
+            `;
+            
+            const runBtn = card.querySelector('.run-btn');
+            const outputEl = card.querySelector('.output');
+
+            runBtn.addEventListener('click', () => {
+                outputEl.innerHTML = ''; 
+                outputEl.innerText = '';
+                try {
+                    example.action(outputEl, card);
+                } catch (e) {
+                    outputEl.innerText = `Error: ${e.message}`;
+                }
+            });
+
+            examplesContainer.appendChild(card);
+        });
+        
+        // -- Live Clock Logic
+        function startTime() {
+            const today = new Date();
+            let h = today.getHours();
+            let m = today.getMinutes();
+            let s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('clock').innerHTML =  h + ":" + m + ":" + s;
+            setTimeout(startTime, 1000);
+        }
+
+        function checkTime(i) {
+            if (i < 10) {i = "0" + i};
+            return i;
+        }
+        startTime();
+
+        // -- Temp Converter Logic
+        window.convertTemp = function(degree) {
+            const celsiusInput = document.getElementById("celsius");
+            const fahrenheitInput = document.getElementById("fahrenheit");
+            if (degree === "C") {
+                if(celsiusInput.value === '') { fahrenheitInput.value = ''; return; }
+                const F = celsiusInput.value * 9 / 5 + 32;
+                fahrenheitInput.value = Math.round(F);
+            } else {
+                if(fahrenheitInput.value === '') { celsiusInput.value = ''; return; }
+                const C = (fahrenheitInput.value - 32) * 5 / 9;
+                celsiusInput.value = Math.round(C);
+            }
+        }
+
+        // -- Modal Logic
+        const modal = document.getElementById('customModal');
+        const modalText = document.getElementById('modalText');
+        const modalButtons = document.getElementById('modalButtons');
+        const modalInputContainer = document.getElementById('modalInputContainer');
+        const modalInput = document.getElementById('modalInput');
+
+        function customAlert(message) {
+            modalText.innerText = message;
+            modalInputContainer.classList.add('hidden');
+            modalButtons.innerHTML = '<button class="bg-blue-500 text-white py-2 px-4 rounded" onclick="closeModal()">OK</button>';
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(value = null) {
+            modal.style.display = 'none';
+            if (window.modalResolve) {
+                window.modalResolve(value);
+            }
+        }
+        
+        function customConfirm(message) {
+            return new Promise(resolve => {
+                window.modalResolve = resolve;
+                modalText.innerText = message;
+                modalInputContainer.classList.add('hidden');
+                modalButtons.innerHTML = `
+                    <button class="bg-green-500 text-white py-2 px-4 rounded" onclick="closeModal(true)">OK</button>
+                    <button class="bg-red-500 text-white py-2 px-4 rounded" onclick="closeModal(false)">Cancel</button>
+                `;
+                modal.style.display = 'flex';
+            });
+        }
+
+        function customPrompt(message, defaultValue = "") {
+            return new Promise(resolve => {
+                window.modalResolve = resolve;
+                modalText.innerText = message;
+                modalInput.value = defaultValue;
+                modalInputContainer.classList.remove('hidden');
+                modalButtons.innerHTML = `
+                    <button class="bg-green-500 text-white py-2 px-4 rounded" onclick="closeModal(document.getElementById('modalInput').value)">OK</button>
+                    <button class="bg-red-500 text-white py-2 px-4 rounded" onclick="closeModal(null)">Cancel</button>
+                `;
+                modal.style.display = 'flex';
+            });
+        }
+        
+        // -- Data Manipulation Logic
+        const employeeData = [
+            { "id": 1, "name": "Alice Johnson", "salary": 75000, "department": "Marketing" },
+            { "id": 2, "name": "Bob Smith", "salary": 68000, "department": "Engineering" },
+            { "id": 3, "name": "Charlie Brown", "salary": 82000, "department": "Human Resources" },
+            { "id": 4, "name": "Diana Lee", "salary": 92000, "department": "Marketing" },
+            { "id": 5, "name": "Ethan Clark", "salary": 95000, "department": "Finance" }
+        ];
+
+        document.getElementById('original-data-code').textContent = JSON.stringify(employeeData, null, 2);
+
+        document.getElementById('map-btn').addEventListener('click', () => {
+            const salaries = employeeData.map(emp => emp.salary);
+            const outputEl = document.getElementById('map-output');
+            outputEl.textContent = JSON.stringify(salaries, null, 2);
+            outputEl.parentElement.classList.toggle('hidden');
+        });
+
+        document.getElementById('filter-btn').addEventListener('click', () => {
+            const marketingEmployees = employeeData.filter(emp => emp.department === "Marketing");
+            const outputEl = document.getElementById('filter-output');
+            outputEl.textContent = JSON.stringify(marketingEmployees, null, 2);
+            outputEl.parentElement.classList.toggle('hidden');
+        });
+
+        document.getElementById('reduce-btn').addEventListener('click', () => {
+            const totalSalary = employeeData.map(emp => emp.salary).reduce((acc, current) => acc + current, 0);
+            const outputEl = document.getElementById('reduce-output');
+            outputEl.textContent = `Total Salary: ${totalSalary.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`;
+            outputEl.parentElement.classList.toggle('hidden');
+        });
+
+        // -- File Handling Logic
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    document.getElementById('csv-output').innerText = content;
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        document.getElementById('download-csv-btn').addEventListener('click', () => {
+            const dataToConvert = userData;
+            const headers = Object.keys(dataToConvert[0]);
+            const csvRows = [headers.join(',')];
+
+            dataToConvert.forEach(row => {
+                const values = headers.map(header => {
+                    const escaped = (''+row[header]).replace(/"/g, '\\"');
+                    return `"${escaped}"`;
+                });
+                csvRows.push(values.join(','));
+            });
+            
+            const csvString = csvRows.join('\n');
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'output.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+
+    </script>
+</body>
+</html>
+
