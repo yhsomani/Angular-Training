@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive JavaScript Concepts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* bg-gray-900 */
+        }
+        .code-block {
+            font-family: 'Fira Code', monospace;
+            background-color: #1F2937; /* bg-gray-800 */
+            color: #d1d5db; /* text-gray-300 */
+            border: 1px solid #374151; /* border-gray-700 */
+            position: relative;
+        }
+        .console-output {
+            font-family: 'Fira Code', monospace;
+            background-color: #000;
+            color: #00ff00; /* Bright green for console text */
+        }
+        .sidebar-item.active {
+            background-color: #374151; /* bg-gray-700 */
+            color: #fff;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1F2937;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4B5563;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6B7280;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: #4B5563;
+            color: white;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .copy-btn:hover {
+            background-color: #6B7280;
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 bg-gray-800 border-r border-gray-700 p-4 flex-shrink-0">
+            <h1 class="text-xl font-bold text-white mb-6">JS Concepts</h1>
+            <nav id="concept-nav" class="flex flex-col space-y-2">
+                <!-- Navigation items will be injected here -->
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 sm:p-8 overflow-y-auto">
+            <div id="main-content">
+                <!-- Content will be dynamically loaded here -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const concepts = [
+            {
+                id: 'welcome',
+                title: 'Welcome!',
+                explanation: `
+                    Welcome to the Interactive JavaScript Concepts guide! This tool combines all the key concepts from your files into one easy-to-use interface.
+                    <br><br>
+                    Select a concept from the sidebar on the left to get started. For each concept, you'll find a clear explanation, a code example, and a "Run Code" button to see the output live.
+                `,
+                code: `console.log("Select a concept from the left menu to begin learning!");`
+            },
+            {
+                id: 'arrow-functions',
+                title: 'Arrow Functions',
+                explanation: `
+                    Arrow functions, introduced in ES6, provide a more concise syntax for writing function expressions. They are especially useful because they do not have their own 'this' context; instead, they inherit 'this' from the parent scope (lexical 'this'). This behavior is very handy in callbacks and object methods.
+                `,
+                code: `
+// Traditional function expression
+const add = function (a, b) {
+    return a + b;
+};
+
+// Arrow function equivalent
+const addArrow = (a, b) => a + b;
+
+console.log("Result from addArrow(10, 20):", addArrow(10, 20));
+console.log("Result from add(20, 30):", add(20, 30));
+
+// Arrow functions with 'this'
+const obj = {
+    value: 2856,
+    getValue: function () {
+        // Arrow function inherits 'this' from the surrounding scope
+        setTimeout(() => {
+            console.log("Value from object using arrow function 'this':", this.value);
+        }, 500);
+    },
+};
+obj.getValue();
+                `
+            },
+            {
+                id: 'classes-inheritance',
+                title: 'Classes, Inheritance & Getters/Setters',
+                explanation: `
+                    ES6 Classes are syntactic sugar over JavaScript's existing prototype-based inheritance. They provide a cleaner, object-oriented syntax.
+                    <br><br>
+                    - <strong>Inheritance:</strong> A class can inherit from another class using the 'extends' keyword. The 'super()' method is used to call the parent class's constructor.
+                    <br>
+                    - <strong>Getters & Setters:</strong> These allow you to define custom behavior for reading and writing properties.
+                    <br>
+                    - <strong>Private Fields:</strong> Using a '#' prefix makes a field private to the class.
+                `,
+                code: `
+class Employee {
+    #data = 100; // Private field
+
+    constructor(empId, name, salary) {
+        this._empId = empId;
+        this._name = name;
+        this._salary = salary;
+        this._commission = 0;
+        this._netSalary = 0;
+    }
+
+    // Getters and Setters
+    get salary() { return this._salary; }
+    set commission(value) { this._commission = value; }
+    set netSalary(value) { this._netSalary = value; }
+
+    showEmployeeDetails() {
+        console.log(\`\\nEmployee: \${this._name} (\${this._empId}), Base Salary: \${this.salary}\`);
+    }
+
+    calculateSalary() {
+        this.showEmployeeDetails();
+        console.log("-> Method from Employee Class");
+    }
+}
+
+class SalesEmployee extends Employee {
+    constructor(empId, name, salary, sales) {
+        super(empId, name, salary);
+        this.sales = sales;
+    }
+
+    calculateSalary() {
+        super.calculateSalary();
+        console.log("-> Overridden method from SalesEmployee Class");
+        if (this.sales < 5000) this.commission = this.salary * 0.07;
+        else if (this.sales < 10000) this.commission = this.salary * 0.10;
+        else if (this.sales < 15000) this.commission = this.salary * 0.15;
+        else this.commission = this.salary * 0.20;
+        
+        this.netSalary = this.salary + this._commission;
+
+        console.log(\`Sales Amount: \${this.sales}\`);
+        console.log(\`Commission Earned: \${this._commission}\`);
+        console.log(\`Net Salary: \${this._netSalary}\`);
+    }
+}
+
+const s1 = new SalesEmployee(1, "Rakesh", 20000, 8000);
+s1.calculateSalary();
+                `
+            },
+            {
+                id: 'async-js',
+                title: 'Async JS: Promises & Async/Await',
+                explanation: `
+                    JavaScript is single-threaded, but it handles long-running tasks like fetching data from a server without freezing the user interface using asynchronous code.
+                    <br><br>
+                    - <strong>Promises:</strong> An object representing the eventual completion (or failure) of an asynchronous operation. It can be in one of three states: pending, fulfilled, or rejected. We use '.then()' for success and '.catch()' for failure.
+                    <br><br>
+                    - <strong>Async/Await:</strong> This is modern syntactic sugar on top of Promises, making asynchronous code look and behave more like synchronous code, which makes it easier to read and write. An 'async' function always returns a promise. The 'await' keyword pauses the function execution until the promise is settled.
+                `,
+                code: `
+// --- Async/Await Example ---
+
+// 1. A function that returns a Promise after a delay
+function fetchData() {
+    console.log("Starting data fetch...");
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({ id: 1, data: "Here is your data from the server!" });
+        }, 1500); // Simulate a 1.5 second network request
+    });
+}
+
+// 2. An async function to use the await keyword
+async function displayData() {
+    try {
+        console.log("Waiting for data...");
+        const result = await fetchData(); // Pauses here until fetchData resolves
+        console.log("Fetch complete!");
+        console.log("Received data:", result);
+    } catch (error) {
+        console.error("An error occurred:", error);
+    } finally {
+        console.log("Data display process finished.");
+    }
+}
+
+// 3. Call the async function
+displayData();
+
+console.log("This message logs immediately, without waiting for the fetch.");
+                `
+            },
+            {
+                id: 'exception-handling',
+                title: 'Exception Handling',
+                explanation: `
+                    Exception handling allows you to gracefully manage errors in your code.
+                    <br><br>
+                    - <strong>try:</strong> The block of code to be tested for errors.
+                    <br>
+                    - <strong>catch:</strong> The block of code to be executed if an error occurs in the 'try' block.
+                    <br>
+                    - <strong>finally:</strong> The block of code that is always executed, regardless of whether an error occurred.
+                    <br>
+                    - <strong>throw:</strong> Used to create custom error messages.
+                `,
+                code: `
+function processUserData(jsonString) {
+    try {
+        const user = JSON.parse(jsonString);
+        if (!user.name || !user.age) {
+            throw new Error("Invalid user data: 'name' or 'age' is missing.");
+        }
+        console.log(\`Success: User \${user.name} (\${user.age}) processed.\`);
+    } catch (error) {
+        if (error instanceof SyntaxError) {
+            console.error("Caught Error: Invalid JSON format provided.", error.message);
+        } else {
+            console.error("Caught Error:", error.message);
+        }
+    } finally {
+        console.log("--- Processing attempt completed. ---");
+    }
+}
+
+processUserData('{"name": "Alice", "age": 30}'); // Valid
+processUserData('{bad json}');                   // Invalid format
+processUserData('{"name": "Bob"}');              // Missing property
+                `
+            },
+            {
+                id: 'iterators-generators',
+                title: 'Iterators & Generators',
+                explanation: `
+                    <strong>Iterators</strong> are objects that define a sequence and potentially a return value upon its termination. They have a 'next()' method which returns an object with 'value' and 'done' properties.
+                    <br><br>
+                    <strong>Generators</strong> are special functions that can be paused and resumed, allowing you to create iterators more easily. They are defined with 'function*' and use the 'yield' keyword to pause and return a value.
+                `,
+                code: `
+// --- Generator Function (Fibonacci) ---
+console.log("Generator Function Example (Fibonacci):");
+
+function* fibonacciGenerator() {
+    let current = 0;
+    let next = 1;
+    while (true) {
+        yield current;
+        [current, next] = [next, current + next];
+    }
+}
+
+const fibonacci = fibonacciGenerator();
+console.log("First 5 Fibonacci numbers:");
+for (let i = 0; i < 5; i++) {
+    console.log(fibonacci.next().value);
+}
+
+// --- Simple Generator ---
+console.log("\\nGenerator Function Example (Simple):");
+
+function* simpleGenerator() {
+    yield 10;
+    yield 20;
+    yield 30;
+}
+const generator = simpleGenerator();
+console.log(generator.next()); // { value: 10, done: false }
+console.log(generator.next()); // { value: 20, done: false }
+console.log(generator.next()); // { value: 30, done: false }
+console.log(generator.next()); // { value: undefined, done: true }
+                `
+            },
+            {
+                id: 'web-storage',
+                title: 'Web Storage & Cookies',
+                explanation: `
+                    Browsers provide several ways to store data on the client-side.
+                    <br><br>
+                    - <strong>localStorage:</strong> Stores data with no expiration date. The data will not be deleted when the browser is closed and will be available the next day, week, or year.
+                    <br>
+                    - <strong>sessionStorage:</strong> Stores data for one session only. The data is deleted when the user closes the specific browser tab.
+                    <br>
+                    - <strong>Cookies:</strong> Small strings of data stored directly in the browser. They are sent with every HTTP request to the server, which can impact performance. They have a small size limit (~4KB).
+                `,
+                code: `
+// --- localStorage ---
+console.log("--- localStorage Example ---");
+// Set an item
+localStorage.setItem('persistentUser', 'Alice');
+// Get the item
+const user = localStorage.getItem('persistentUser');
+console.log(\`Retrieved from localStorage: \${user}\`);
+// To see this persist, run the code, then refresh the page and run it again.
+
+
+// --- sessionStorage ---
+console.log("\\n--- sessionStorage Example ---");
+// Set an item
+sessionStorage.setItem('sessionData', 'This is for the current tab only.');
+// Get the item
+const sessionInfo = sessionStorage.getItem('sessionData');
+console.log(\`Retrieved from sessionStorage: \${sessionInfo}\`);
+// This data will be gone if you close and reopen the tab.
+
+
+// --- Cookies ---
+console.log("\\n--- Cookies Example ---");
+// Set a simple cookie
+document.cookie = "username=John Doe; expires=Thu, 18 Dec 2025 12:00:00 UTC; path=/";
+console.log("A cookie named 'username' has been set.");
+console.log("You can view it in your browser's developer tools (Application > Cookies).");
+                `
+            },
+            {
+                id: 'closures',
+                title: 'Closures & Scope',
+                explanation: `
+                    A <strong>closure</strong> is the combination of a function and the lexical environment within which that function was declared. In simpler terms, a closure gives an inner function access to the variables of its outer function, even after the outer function has finished executing. This is a powerful concept for creating private variables and stateful functions.
+                `,
+                code: `
+function createCounter() {
+    let count = 0; // This variable is 'closed over' by the inner function
+
+    return function() {
+        count++;
+        console.log(\`The counter is now at: \${count}\`);
+        return count;
+    };
+}
+
+console.log("Creating the first counter...");
+const counter1 = createCounter();
+// The 'count' variable from createCounter's scope still exists here.
+
+counter1(); // Output: 1
+counter1(); // Output: 2
+
+console.log("\\nCreating a second, independent counter...");
+const counter2 = createCounter();
+counter2(); // Output: 1 (This is a separate 'count' variable)
+                `
+            },
+            {
+                id: 'node-conceptual',
+                title: 'Node.js & Webpack (Conceptual)',
+                explanation: `
+                    These concepts are for application development and cannot be run directly in this browser environment, but it's important to understand their roles.
+                    <br><br>
+                    - <strong>Node.js:</strong> A JavaScript runtime environment that allows you to run JavaScript on the server-side (outside of a browser). It's used for building backend services, APIs, and command-line tools. The file processing script from your original files uses Node.js's 'fs' (file system) and 'fast-csv' modules.
+                    <br><br>
+                    - <strong>Webpack:</strong> A powerful module bundler for JavaScript applications. It takes all your project files (JS, CSS, images) and their dependencies, and bundles them into a few static files that can be efficiently served to a browser. This is what the 'webpack.config.js' file configured.
+                `,
+                code: `
+// This code cannot be run in the browser.
+// It is a conceptual example of a Node.js script.
+
+/*
+const fs = require('fs'); // Node.js File System module
+const path = require('path'); // Node.js Path module
+
+// Read a file
+fs.readFile('myFile.txt', 'utf8', (err, data) => {
+    if (err) {
+        console.error("Error reading file:", err);
+        return;
+    }
+    console.log("File content:", data);
+});
+*/
+
+console.log("The code above is a non-runnable example of a Node.js script.");
+                `
+            },
+        ];
+
+        const mainContent = document.getElementById('main-content');
+        const conceptNav = document.getElementById('concept-nav');
+
+        function renderConcept(concept) {
+            mainContent.innerHTML = `
+                <div class="space-y-6">
+                    <h2 class="text-3xl font-bold text-white">${concept.title}</h2>
+                    <p class="text-gray-400 leading-relaxed">${concept.explanation}</p>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Example Code</h3>
+                        <div class="code-block rounded-lg p-4 overflow-x-auto">
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre><code id="code-display">${concept.code.trim()}</code></pre>
+                        </div>
+                    </div>
+
+                    <button id="run-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                        Run Code
+                    </button>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Console Output</h3>
+                        <div class="console-output rounded-lg p-4 min-h-[100px] text-sm whitespace-pre-wrap">
+                            <div id="output-area"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('run-btn').addEventListener('click', () => {
+                runCode(concept.code);
+            });
+
+            // Update active state in sidebar
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.id === concept.id);
+            });
+        }
+
+        function runCode(codeToRun) {
+            const outputArea = document.getElementById('output-area');
+            outputArea.innerHTML = '';
+            const oldLog = console.log;
+            const oldError = console.error;
+
+            console.log = (...args) => {
+                const message = args.map(arg => typeof arg === 'object' ? JSON.stringify(arg, null, 2) : arg).join(' ');
+                outputArea.innerHTML += `<span class="text-gray-300">> ${message}</span>\n`;
+            };
+            
+            console.error = (...args) => {
+                const message = args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : arg).join(' ');
+                outputArea.innerHTML += `<span class="text-red-500">> Error: ${message}</span>\n`;
+            };
+
+            try {
+                // Using an async function constructor to allow top-level await
+                const asyncFunction = new Function('return (async () => {' + codeToRun + '})()');
+                asyncFunction();
+            } catch (e) {
+                console.error(e);
+            } finally {
+                // Restore original console functions after a short delay
+                // to ensure all async operations have time to log.
+                setTimeout(() => {
+                    console.log = oldLog;
+                    console.error = oldError;
+                }, 2000);
+            }
+        }
+        
+        function copyCode(button) {
+            const code = button.nextElementSibling.querySelector('code').innerText;
+            // Using execCommand for wider compatibility within this environment
+            const textarea = document.createElement('textarea');
+            textarea.value = code;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            
+            button.innerText = 'Copied!';
+            setTimeout(() => {
+                button.innerText = 'Copy';
+            }, 2000);
+        }
+
+        function setupNavigation() {
+            concepts.forEach(concept => {
+                const navItem = document.createElement('a');
+                navItem.href = '#';
+                navItem.textContent = concept.title;
+                navItem.dataset.id = concept.id;
+                navItem.className = 'sidebar-item text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors';
+                navItem.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    renderConcept(concept);
+                });
+                conceptNav.appendChild(navItem);
+            });
+        }
+
+        // Initial Load
+        setupNavigation();
+        renderConcept(concepts[0]); // Load the welcome message first
+    </script>
+</body>
+</html>
+
