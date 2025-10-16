@@ -496,7 +496,7 @@
 - **Webpack**: Bundles and optimizes JS, CSS, and assets.
 - **Webpack Dev Server**: Enhances development with live reloading.
 - **Setup**: Initialize project, install Webpack, configure loaders for CSS/SASS, bundle code, and serve via HTML.
-```
+
 
 
 ### Structured Notes on JavaScript Concepts
@@ -787,7 +787,7 @@
       self.onmessage = e => self.postMessage(e.data.num * 2);
       ```
     - Use: Offload CPU tasks, no DOM access.
-```
+
 
 
 # Structured Notes on JavaScript and Webpack Concepts
