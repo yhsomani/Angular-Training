@@ -3,6 +3,7 @@
 ## Installation and Setup Commands
 
 - Install TypeScript globally: `npm i -g typescript`
+- We can create config file of TypeScript file `npm init -y`
 - Install ts-loader as a dev dependency: `npm i --save-dev ts-loader`
 - Update webpack configuration: Change `webpack.config.js` (specific changes not detailed, typically to handle TypeScript files).
 - Compile a TypeScript file: `tsc tsfile.ts`
