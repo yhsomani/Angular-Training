@@ -1,3 +1,6 @@
 # Ignore PDF files (case-insensitive)
 *.pdf
 *.PDF
+
+# Dependencies
+/node_modules
