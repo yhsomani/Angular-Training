@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive TypeScript Guide: Namespaces & Decorators</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .nav-link {
+            transition: all 0.2s ease-in-out;
+        }
+        .nav-link.active {
+            background-color: #4f46e5;
+            color: white;
+            transform: translateX(4px);
+        }
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.875rem;
+        }
+        .output-box {
+            background-color: #e0e7ff;
+            border-left: 4px solid #4f46e5;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            margin-top: 1rem;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .keyword { color: #c084fc; }
+        .function { color: #60a5fa; }
+        .string { color: #facc15; }
+        .number { color: #6ee7b7; }
+        .comment { color: #9ca3af; }
+        .class { color: #f9a8d4; }
+        .decorator { color: #818cf8; }
+    </style>
+</head>
+<body class="p-4 lg:p-8">
+    <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+        <header class="bg-gray-800 text-white p-6">
+            <h1 class="text-3xl font-bold">Interactive TypeScript Guide</h1>
+            <p class="text-lg text-gray-300 mt-1">Namespaces & Decorators</p>
+        </header>
+        
+        <div class="lg:flex">
+            <!-- Navigation Sidebar -->
+            <aside class="w-full lg:w-1/4 bg-gray-50 p-6 border-r border-gray-200">
+                <nav id="navigation">
+                    <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Namespaces</h2>
+                    <ul class="space-y-2">
+                        <li><a href="#encapsulation" class="nav-link block p-2 rounded-md font-medium">Encapsulation</a></li>
+                        <li><a href="#modularity" class="nav-link block p-2 rounded-md font-medium">Modularity</a></li>
+                        <li><a href="#file-splitting" class="nav-link block p-2 rounded-md font-medium">File Splitting</a></li>
+                    </ul>
+
+                    <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-6 mb-3">Decorators</h2>
+                    <ul class="space-y-2">
+                        <li><a href="#class-decorator" class="nav-link block p-2 rounded-md font-medium">Class Decorator</a></li>
+                        <li><a href="#method-decorator" class="nav-link block p-2 rounded-md font-medium">Method Decorator</a></li>
+                        <li><a href="#property-decorator" class="nav-link block p-2 rounded-md font-medium">Property Decorator</a></li>
+                        <li><a href="#accessor-decorator" class="nav-link block p-2 rounded-md font-medium">Property Access</a></li>
+                        <li><a href="#parameter-decorator" class="nav-link block p-2 rounded-md font-medium">Parameter Decorator</a></li>
+                        <li><a href="#decorator-factory" class="nav-link block p-2 rounded-md font-medium">Decorator Factory</a></li>
+                        <li><a href="#async-decorator" class="nav-link block p-2 rounded-md font-medium">Async Decorator</a></li>
+                        <li><a href="#cache-decorator" class="nav-link block p-2 rounded-md font-medium">Cache Decorator</a></li>
+                    </ul>
+
+                    <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-6 mb-3">Configuration</h2>
+                    <ul class="space-y-2">
+                        <li><a href="#tsconfig" class="nav-link block p-2 rounded-md font-medium">tsconfig.json</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="w-full lg:w-3/4 p-8 lg:p-12">
+                <!-- Welcome Section -->
+                <section id="welcome" class="content-section active">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Welcome!</h2>
+                    <p class="text-lg text-gray-600 mb-6">Select a topic from the navigation on the left to get started. This interactive guide will walk you through the core concepts of TypeScript Namespaces and Decorators with live examples and visualizations.</p>
+                    <div class="bg-indigo-100 border-l-4 border-indigo-500 text-indigo-700 p-4 rounded-md">
+                        <p class="font-bold">How to use this guide:</p>
+                        <ul class="list-disc list-inside mt-2">
+                            <li>Click on a navigation link to view the topic.</li>
+                            <li>Read the explanation for each concept.</li>
+                            <li>Examine the provided code examples.</li>
+                            <li>Click the "Run" buttons to see the code in action and view the output.</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <!-- Namespace Sections -->
+                <section id="encapsulation" class="content-section">
+                    <h2 class="text-2xl font-bold mb-4">Encapsulation with Namespaces</h2>
+                    <p class="mb-4">Namespaces allow you to group related functions, classes, and variables under a single, unique name. This prevents naming conflicts in the global scope and helps organize your code. You must use the `export` keyword to make members of a namespace accessible from outside.</p>
+                    <pre class="code-block"><code class="language-typescript"><span class="comment">// Encapsulation using namespaces</span>
+<span class="keyword">namespace</span> <span class="class">MathUtils</span> {
+    <span class="keyword">export</span> <span class="keyword">function</span> <span class="function">add</span>(a: <span class="class">number</span>, b: <span class="class">number</span>): <span class="class">number</span> {
+        <span class="keyword">return</span> a + b;
+    }
+
+    <span class="keyword">export</span> <span class="keyword">function</span> <span class="function">subtract</span>(a: <span class="class">number</span>, b: <span class="class">number</span>): <span class="class">number</span> {
+        <span class="keyword">return</span> a - b;
+    }
+}
+
+<span class="comment">// Usage</span>
+console.<span class="function">log</span>(<span class="class">MathUtils</span>.<span class="function">add</span>(<span class="number">5</span>, <span class="number">3</span>));
+console.<span class="function">log</span>(<span class="class">MathUtils</span>.<span class="function">subtract</span>(<span class="number">10</span>, <span class="number">4</span>));</code></pre>
+                    <button class="run-btn mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Run</button>
+                    <div class="output-box"></div>
+                </section>
+                
+                <section id="modularity" class="content-section">
+                    <h2 class="text-2xl font-bold mb-4">Modularity with Nested Namespaces</h2>
+                    <p class="mb-4">Namespaces can be nested inside other namespaces to create a more granular level of organization. This is useful for large libraries or applications where you need to group functionality into logical sub-modules.</p>
+                    <pre class="code-block"><code class="language-typescript"><span class="comment">// Modularity using nested namespaces</span>
+<span class="keyword">namespace</span> <span class="class">Geometry</span> {
+    <span class="keyword">export</span> <span class="keyword">namespace</span> <span class="class">Shapes</span> {
+        <span class="keyword">export</span> <span class="keyword">class</span> <span class="class">Circle</span> {
+            <span class="keyword">constructor</span>(<span class="keyword">public</span> radius: <span class="class">number</span>) {}
+            <span class="function">calculateArea</span>(): <span class="class">number</span> {
+                <span class="keyword">return</span> Math.PI * <span class="keyword">this</span>.radius ** <span class="number">2</span>;
+            }
+        }
+
+        <span class="keyword">export</span> <span class="keyword">class</span> <span class="class">Rectangle</span> {
+            <span class="keyword">constructor</span>(<span class="keyword">public</span> width: <span class="class">number</span>, <span class="keyword">public</span> height: <span class="class">number</span>) {}
+            <span class="function">calculateArea</span>(): <span class="class">number</span> {
+                <span class="keyword">return</span> <span class="keyword">this</span>.width * <span class="keyword">this</span>.height;
+            }
+        }
+    }
+}
+
+<span class="comment">// Usage</span>
+<span class="keyword">const</span> circle = <span class="keyword">new</span> <span class="class">Geometry</span>.<span class="class">Shapes</span>.<span class="class">Circle</span>(<span class="number">5</span>);
+console.<span class="function">log</span>(<span class="string">`Circle Area: </span><span class="variable">${circle.<span class="function">calculateArea</span>().<span class="function">toFixed</span>(<span class="number">2</span>)}</span><span class="string">`</span>);
+
+<span class="keyword">const</span> rect = <span class="keyword">new</span> <span class="class">Geometry</span>.<span class="class">Shapes</span>.<span class="class">Rectangle</span>(<span class="number">4</span>, <span class="number">6</span>);
+console.<span class="function">log</span>(<span class="string">`Rectangle Area: </span><span class="variable">${rect.<span class="function">calculateArea</span>()}</span><span class="string">`</span>);</code></pre>
+                    <button class="run-btn mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Run</button>
+                    <div class="output-box"></div>
+                </section>
+
+                <section id="file-splitting" class="content-section">
+                    <h2 class="text-2xl font-bold mb-4">Splitting Namespaces Across Files</h2>
+                    <p class="mb-4">For larger projects, you can split a namespace across multiple files. This is achieved using the `/// <reference path="..." />` directive, which tells the TypeScript compiler about the dependency between files. This helps in maintaining a clean project structure.</p>
+                    
+                    <h3 class="text-xl font-semibold mt-6 mb-2">File 1: StringUtility.ts</h3>
+                    <pre class="code-block"><code class="language-typescript"><span class="keyword">namespace</span> <span class="class">StringUtility</span> {
+    <span class="keyword">export</span> <span class="keyword">function</span> <span class="function">ToCapital</span>(str: <span class="class">string</span>): <span class="class">string</span> {
+        <span class="keyword">return</span> str.<span class="function">toUpperCase</span>();
+    }
+}</code></pre>
+
+                    <h3 class="text-xl font-semibold mt-6 mb-2">File 2: Employee.ts</h3>
+                    <pre class="code-block"><code class="language-typescript"><span class="comment">/// &lt;reference path="StringUtility.ts" /></span>
+
+<span class="keyword">namespace</span> <span class="class">MyCompany</span> {
+    <span class="keyword">export</span> <span class="keyword">class</span> <span class="class">Employee</span> {
+        empCode: <span class="class">number</span>;
+        empName: <span class="class">string</span>;
+        <span class="keyword">constructor</span>(name: <span class="class">string</span>, code: <span class="class">number</span>) {
+            <span class="keyword">this</span>.empName = <span class="class">StringUtility</span>.<span class="function">ToCapital</span>(name);
+            <span class="keyword">this</span>.empCode = code;
+        }
+        <span class="function">displayEmployee</span>() {
+            console.<span class="function">log</span>(<span class="string">`Employee Code: </span><span class="variable">${<span class="keyword">this</span>.empCode}</span><span class="string">, Employee Name: </span><span class="variable">${<span class="keyword">this</span>.empName}</span><span class="string">`</span>);
+        }
+    }
+}
+
+<span class="comment">// Usage</span>
+<span class="keyword">let</span> emp = <span class="keyword">new</span> <span class="class">MyCompany</span>.<span class="class">Employee</span>(<span class="string">'john doe'</span>, <span class="number">101</span>);
+emp.<span class="function">displayEmployee</span>();
+</code></pre>
+                    <button class="run-btn mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Run</button>
+                    <div class="output-box"></div>
+                    <p class="mt-4 text-sm text-gray-600"><strong>Note:</strong> In modern TypeScript, modules (`import`/`export`) are generally preferred over namespaces for managing file dependencies.</p>
+                </section>
+                
+                <!-- Decorator Sections -->
+                <section id="class-decorator" class="content-section">
+                    <h2 class="text-2xl font-bold mb-4">Class Decorator</h2>
+                    <p class="mb-4">A Class Decorator is applied to a class constructor and can be used to observe, modify, or replace a class definition. It receives the constructor of the class as its only argument.</p>
+                    <pre class="code-block"><code class="language-typescript"><span class="comment">// A decorator function that adds a 'createdAt' property to a class.</span>
+<span class="keyword">function</span> <span class="decorator">WithCreationDate</span>&lt;T <span class="keyword">extends</span> { <span class="keyword">new</span> (...args: <span class="keyword">any</span>[]): {} }&gt;(constructor: T) {
+    <span class="keyword">return</span> <span class="keyword">class</span> <span class="keyword">extends</span> constructor {
+        createdAt = <span class="keyword">new</span> <span class="function">Date</span>();
+    };
+}
+
+<span class="decorator">@WithCreationDate</span>
+<span class="keyword">class</span> <span class="class">User</span> {
+    name: <span class="class">string</span>;
+    <span class="keyword">constructor</span>(name: <span class="class">string</span>) {
+        <span class="keyword">this</span>.name = name;
+    }
+}
+
+<span class="keyword">const</span> user = <span class="keyword">new</span> <span class="class">User</span>(<span class="string">'Alice'</span>);
+console.<span class="function">log</span>(<span class="string">'Created User:'</span>, user);</code></pre>
+                    <button class="run-btn mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Run</button>
+                    <div class="output-box"></div>
+                </section>
+                
+                <section id="method-decorator" class="content-section">
+                    <h2 class="text-2xl font-bold mb-4">Method Decorator</h2>
+                    <p class="mb-4">A Method Decorator is applied to a method definition. It can be used to observe, modify, or replace the method. It receives three arguments: the target (class prototype), the method name, and the property descriptor.</p>
+                    <pre class="code-block"><code class="language-typescript"><span class="comment">// A decorator to log when a method is called.</span>
+<span class="keyword">function</span> <span class="decorator">LogMethodCall</span>(target: <span class="keyword">any</span>, methodName: <span class="class">string</span>, descriptor: <span class="class">PropertyDescriptor</span>) {
+    <span class="keyword">const</span> originalMethod = descriptor.value;
+    descriptor.value = <span class="keyword">function</span> (...args: <span class="keyword">any</span>[]) {
+        console.<span class="function">log</span>(<span class="string">`Calling '</span><span class="variable">${methodName}</span><span class="string">' with arguments: </span><span class="variable">${JSON.<span class="function">stringify</span>(args)}</span><span class="string">`</span>);
+        <span class="keyword">const</span> result = originalMethod.<span class="function">apply</span>(<span class="keyword">this</span>, args);
+        console.<span class="function">log</span>(<span class="string">`Method '</span><span class="variable">${methodName}</span><span class="string">' returned: </span><span class="variable">${JSON.<span class="function">stringify</span>(result)}</span><span class="string">`</span>);
+        <span class="keyword">return</span> result;
+    };
+}
+
+<span class="keyword">class</span> <span class="class">Calculator</span> {
+    <span class="decorator">@LogMethodCall</span>
+    <span class="function">add</span>(a: <span class="class">number</span>, b: <span class="class">number</span>): <span class="class">number</span> {
+        <span class="keyword">return</span> a + b;
+    }
+}
+
+<span class="keyword">const</span> calc = <span class="keyword">new</span> <span class="class">Calculator</span>();
+calc.<span class="function">add</span>(<span class="number">5</span>, <span class="number">10</span>);
+</code></pre>
+                    <button class="run-btn mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Run</button>
+                    <div class="output-box"></div>
+                </section>
+
+                <section id="property-decorator" class="content-section">
+                    <h2 class="text-2xl font-bold mb-4">Property Decorator</h2>
+                    <p class="mb-4">A Property Decorator is applied to a property declaration. It receives two arguments: the target (class prototype) and the property key (name). It's often used with `Object.defineProperty` to change how a property is handled.</p>
+                    <pre class="code-block"><code class="language-typescript"><span class="comment">// A decorator to format a string property to uppercase.</span>
+<span class="keyword">function</span> <span class="decorator">UpperCase</span>(target: <span class="keyword">any</span>, propertyKey: <span class="class">string</span>) {
+    <span class="keyword">let</span> value: <span class="class">string</span>;
+    <span class="keyword">const</span> getter = <span class="keyword">function</span>() { <span class="keyword">return</span> value; };
+    <span class="keyword">const</span> setter = <span class="keyword">function</span>(newVal: <span class="class">string</span>) {
+        console.<span class="function">log</span>(<span class="string">`Setting '${propertyKey}' to '${newVal}' and capitalizing.`</span>);
+        value = newVal.<span class="function">toUpperCase</span>();
+    };
+    Object.<span class="function">defineProperty</span>(target, propertyKey, {
+        <span class="function">get</span>: getter,
+        <span class="function">set</span>: setter
+    });
+}
+
+<span class="keyword">class</span> <span class="class">Greeting</span> {
+    <span class="decorator">@UpperCase</span>
+    message: <span class="class">string</span> = <span class="string">""</span>;
+}
+
+<span class="keyword">const</span> greet = <span class="keyword">new</span> <span class="class">Greeting</span>();
+greet.message = <span class="string">'Hello, TypeScript!'</span>;
+console.<span class="function">log</span>(greet.message);</code></pre>
+                    <button class="run-btn mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Run</button>
+                    <div class="output-box"></div>
+                </section>
+
+                <section id="accessor-decorator" class="content-section">
+                    <h2 class="text-2xl font-bold mb-4">Logging Property Access</h2>
+                    <p class="mb-4">While a dedicated accessor decorator exists in modern TypeScript, a very common and powerful pattern is to use a <strong>Property Decorator</strong> to log reads (gets) and writes (sets) to a property. This decorator replaces the original property with a getter and setter that add logging functionality.</p>
+                    <pre class="code-block"><code class="language-typescript"><span class="comment">// A property decorator to log get/set access.</span>
+<span class="keyword">function</span> <span class="decorator">LogAccess</span>(target: <span class="keyword">any</span>, propertyKey: <span class="class">string</span>) {
+    <span class="keyword">let</span> _value: <span class="keyword">any</span>; <span class="comment">// Backing variable captured in the closure</span>
+
+    <span class="keyword">const</span> getter = <span class="keyword">function</span> () {
+        console.<span class="function">log</span>(<span class="string">`GET: </span><span class="variable">${propertyKey}</span><span class="string"> => </span><span class="variable">${_value}</span><span class="string">`</span>);
+        <span class="keyword">return</span> _value;
+    };
+
+    <span class="keyword">const</span> setter = <span class="keyword">function</span> (newVal: <span class="keyword">any</span>) {
+        console.<span class="function">log</span>(<span class="string">`SET: </span><span class="variable">${propertyKey}</span><span class="string"> => </span><span class="variable">${newVal}</span><span class="string">`</span>);
+        _value = newVal;
+    };
+    
+    <span class="comment">// Replace the property with our getter and setter</span>
+    Object.<span class="function">defineProperty</span>(target, propertyKey, {
+        <span class="function">get</span>: getter,
+        <span class="function">set</span>: setter,
+        enumerable: <span class="keyword">true</span>,
+        configurable: <span class="keyword">true</span>,
+    });
+}
+
+<span class="keyword">class</span> <span class="class">Inventory</span> {
+    <span class="decorator">@LogAccess</span>
+    itemCount: <span class="class">number</span> = <span class="number">0</span>;
+}
+<span class="keyword">const</span> storage = <span class="keyword">new</span> <span class="class">Inventory</span>();
+storage.itemCount = <span class="number">150</span>; <span class="comment">// Triggers the setter</span>
+console.<span class="function">log</span>(<span class="string">`Current items: </span><span class="variable">${storage.itemCount}</span><span class="string">`</span>); <span class="comment">// Triggers the getter</span>
+</code></pre>
+                    <button class="run-btn mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Run</button>
+                    <div class="output-box"></div>
+                </section>
+
+                <section id="parameter-decorator" class="content-section">
+                    <h2 class="text-2xl font-bold mb-4">Parameter Decorator</h2>
+                    <p class="mb-4">A Parameter Decorator is applied to a parameter declaration. It receives three arguments: the target (class prototype), the method name, and the parameter's index in the argument list. They are often used for metadata reflection.</p>
+                    <pre class="code-block"><code class="language-typescript"><span class="comment">// A decorator to log metadata about a parameter.</span>
+<span class="keyword">function</span> <span class="decorator">LogParameter</span>(target: <span class="keyword">any</span>, methodName: <span class="class">string</span>, paramIndex: <span class="class">number</span>) {
+    console.<span class="function">log</span>(<span class="string">`Metadata: Parameter at index </span><span class="variable">${paramIndex}</span><span class="string"> in method '</span><span class="variable">${methodName}</span><span class="string">' is decorated.`</span>);
+}
+
+<span class="keyword">class</span> <span class="class">UserService</span> {
+    <span class="function">createUser</span>(name: <span class="class">string</span>, <span class="decorator">@LogParameter</span> email: <span class="class">string</span>) {
+        console.<span class="function">log</span>(<span class="string">`Creating user </span><span class="variable">${name}</span><span class="string"> with email </span><span class="variable">${email}</span><span class="string">`</span>);
+    }
+}
+
+<span class="keyword">const</span> service = <span class="keyword">new</span> <span class="class">UserService</span>();
+service.<span class="function">createUser</span>(<span class="string">'Bob'</span>, <span class="string">'bob@example.com'</span>);
+</code></pre>
+                    <button class="run-btn mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Run</button>
+                    <div class="output-box"></div>
+                </section>
+
+                <section id="decorator-factory" class="content-section">
+                    <h2 class="text-2xl font-bold mb-4">Decorator Factory</h2>
+                    <p class="mb-4">A Decorator Factory is a function that returns a decorator function. This allows you to customize the decorator with arguments. The factory takes the arguments, and the returned function acts as the actual decorator.</p>
+                    <pre class="code-block"><code class="language-typescript"><span class="comment">// A factory that creates a method decorator to log with a custom prefix.</span>
+<span class="keyword">function</span> <span class="function">LogWithPrefix</span>(prefix: <span class="class">string</span>) {
+    <span class="keyword">return</span> <span class="keyword">function</span> (target: <span class="keyword">any</span>, methodName: <span class="class">string</span>, descriptor: <span class="class">PropertyDescriptor</span>) {
+        <span class="keyword">const</span> originalMethod = descriptor.value;
+        descriptor.value = <span class="keyword">function</span>(...args: <span class="keyword">any</span>[]) {
+            console.<span class="function">log</span>(<span class="string">`</span><span class="variable">${prefix}</span><span class="string">: Calling '</span><span class="variable">${methodName}</span><span class="string">'...`</span>);
+            <span class="keyword">return</span> originalMethod.<span class="function">apply</span>(<span class="keyword">this</span>, args);
+        }
+    }
+}
+
+<span class="keyword">class</span> <span class="class">TaskRunner</span> {
+    <span class="decorator">@LogWithPrefix</span>(<span class="string">'[INFO]'</span>)
+    <span class="function">runTask</span>(taskName: <span class="class">string</span>) {
+        console.<span class="function">log</span>(<span class="string">`Executing task: </span><span class="variable">${taskName}</span><span class="string">`</span>);
+    }
+}
+
+<span class="keyword">const</span> runner = <span class="keyword">new</span> <span class="class">TaskRunner</span>();
+runner.<span class="function">runTask</span>(<span class="string">'Process payments'</span>);
+</code></pre>
+                    <button class="run-btn mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Run</button>
+                    <div class="output-box"></div>
+                </section>
+
+                <section id="async-decorator" class="content-section">
+                    <h2 class="text-2xl font-bold mb-4">Async Decorator</h2>
+                    <p class="mb-4">Decorators work seamlessly with async methods. This example shows a `Retry` decorator that re-attempts an async operation if it fails. Notice how the operation fails twice before succeeding on the third try.</p>
+                    <pre class="code-block"><code class="language-typescript"><span class="comment">// A decorator factory to retry a failing async method.</span>
+<span class="keyword">function</span> <span class="decorator">Retry</span>(retries: <span class="class">number</span>) {
+    <span class="keyword">return</span> <span class="keyword">function</span> (target: <span class="keyword">any</span>, methodName: <span class="class">string</span>, descriptor: <span class="class">PropertyDescriptor</span>) {
+        <span class="keyword">const</span> originalMethod = descriptor.value;
+        descriptor.value = <span class="keyword">async</span> <span class="keyword">function</span> (...args: <span class="keyword">any</span>[]) {
+            <span class="keyword">let</span> attempt = <span class="number">1</span>;
+            <span class="keyword">while</span> (attempt <= retries) {
+                <span class="keyword">try</span> {
+                    console.<span class="function">log</span>(<span class="string">`Attempt </span><span class="variable">${attempt}</span><span class="string"> for </span><span class="variable">${methodName}</span><span class="string">...`</span>);
+                    <span class="keyword">const</span> result = <span class="keyword">await</span> originalMethod.<span class="function">apply</span>(<span class="keyword">this</span>, args);
+                    <span class="comment">// Succeeded, return the result.</span>
+                    <span class="keyword">return</span> result;
+                } <span class="keyword">catch</span> (error) {
+                    console.<span class="function">log</span>(<span class="string">`Attempt </span><span class="variable">${attempt}</span><span class="string"> failed: </span><span class="variable">${error.message}</span><span class="string">`</span>);
+                    attempt++;
+                    <span class="keyword">if</span> (attempt > retries) {
+                        console.<span class="function">log</span>(<span class="string">`ERROR: </span><span class="variable">${methodName}</span><span class="string"> failed after </span><span class="variable">${retries}</span><span class="string"> attempts.`</span>);
+                        <span class="keyword">throw</span> error; <span class="comment">// Re-throw the last error</span>
+                    }
+                }
+            }
+        };
+    };
+}
+
+<span class="keyword">class</span> <span class="class">API</span> {
+    private callCount = <span class="number">0</span>;
+
+    <span class="decorator">@Retry</span>(<span class="number">3</span>)
+    <span class="keyword">async</span> <span class="function">fetchData</span>() {
+        <span class="keyword">this</span>.callCount++;
+        <span class="keyword">if</span> (<span class="keyword">this</span>.callCount < <span class="number">3</span>) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"Network not ready"</span>);
+        }
+        <span class="keyword">return</span> { success: <span class="keyword">true</span>, data: <span class="string">"Payload from server"</span> };
+    }
+}
+
+(<span class="keyword">async</span> () => {
+    <span class="keyword">const</span> api = <span class="keyword">new</span> <span class="class">API</span>();
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> data = <span class="keyword">await</span> api.<span class="function">fetchData</span>();
+        console.<span class="function">log</span>(<span class="string">"Final result:"</span>, data);
+    } <span class="keyword">catch</span> (e) {
+        console.<span class="function">log</span>(<span class="string">"Caught final failure:"</span>, e.message);
+    }
+})();
+</code></pre>
+                    <button class="run-btn mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Run</button>
+                    <div class="output-box"></div>
+                </section>
+                
+                <section id="cache-decorator" class="content-section">
+                    <h2 class="text-2xl font-bold mb-4">Cache Decorator</h2>
+                    <p class="mb-4">This decorator demonstrates memoization. It caches the result of a function call. If the function is called again with the same arguments, the cached result is returned instead of re-computing, which can significantly improve performance for expensive operations.</p>
+                    <pre class="code-block"><code class="language-typescript"><span class="comment">// A decorator to cache the results of a method.</span>
+<span class="keyword">function</span> <span class="decorator">Cache</span>(target: <span class="keyword">any</span>, methodName: <span class="class">string</span>, descriptor: <span class="class">PropertyDescriptor</span>) {
+    <span class="keyword">const</span> cache = <span class="keyword">new</span> Map();
+    <span class="keyword">const</span> originalMethod = descriptor.value;
+
+    descriptor.value = <span class="keyword">function</span> (...args: <span class="keyword">any</span>[]) {
+        <span class="keyword">const</span> key = JSON.<span class="function">stringify</span>(args);
+        <span class="keyword">if</span> (!cache.<span class="function">has</span>(key)) {
+            console.<span class="function">log</span>(<span class="string">`Calculating and caching result for args: </span><span class="variable">${key}</span><span class="string">`</span>);
+            cache.<span class="function">set</span>(key, originalMethod.<span class="function">apply</span>(<span class="keyword">this</span>, args));
+        } <span class="keyword">else</span> {
+            console.<span class="function">log</span>(<span class="string">`Returning cached result for args: </span><span class="variable">${key}</span><span class="string">`</span>);
+        }
+        <span class="keyword">return</span> cache.<span class="function">get</span>(key);
+    };
+}
+
+<span class="keyword">class</span> <span class="class">MathOperations</span> {
+    <span class="decorator">@Cache</span>
+    <span class="function">fibonacci</span>(n: <span class="class">number</span>): <span class="class">number</span> {
+        <span class="keyword">if</span> (n <= <span class="number">1</span>) <span class="keyword">return</span> n;
+        <span class="keyword">return</span> <span class="keyword">this</span>.<span class="function">fibonacci</span>(n - <span class="number">1</span>) + <span class="keyword">this</span>.<span class="function">fibonacci</span>(n - <span class="number">2</span>);
+    }
+}
+
+<span class="keyword">const</span> math = <span class="keyword">new</span> <span class="class">MathOperations</span>();
+console.<span class="function">log</span>(<span class="string">'First call for fibonacci(10):'</span>);
+math.<span class="function">fibonacci</span>(<span class="number">10</span>);
+console.<span class="function">log</span>(<span class="string">'---'</span>);
+console.<span class="function">log</span>(<span class="string">'Second call for fibonacci(10):'</span>);
+console.<span class="function">log</span>(<span class="string">`Result: </span><span class="variable">${math.<span class="function">fibonacci</span>(<span class="number">10</span>)}</span><span class="string">`</span>);
+</code></pre>
+                    <button class="run-btn mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Run</button>
+                    <div class="output-box"></div>
+                </section>
+
+
+                <!-- Config Section -->
+                <section id="tsconfig" class="content-section">
+                    <h2 class="text-2xl font-bold mb-4">tsconfig.json for Decorators</h2>
+                    <p class="mb-4">To use decorators in TypeScript, you must enable two specific options in your `tsconfig.json` file. These are experimental features, but they are widely used in frameworks like Angular and NestJS.</p>
+                    <ul class="list-disc list-inside bg-amber-100 p-4 rounded-md mb-4">
+                        <li><code class="font-mono text-amber-800">"experimentalDecorators": true</code>: Enables support for the decorator syntax.</li>
+                        <li><code class="font-mono text-amber-800">"emitDecoratorMetadata": true</code>: Causes the compiler to emit metadata about the types of decorated properties, methods, and parameters. This is used by reflection libraries.</li>
+                    </ul>
+                    <pre class="code-block"><code class="language-json">{
+  <span class="string">"compilerOptions"</span>: {
+    <span class="string">"target"</span>: <span class="string">"es6"</span>,
+    <span class="string">"module"</span>: <span class="string">"commonjs"</span>,
+    <span class="string">"lib"</span>: [<span class="string">"es6"</span>],
+    <span class="string">"strict"</span>: <span class="keyword">true</span>,
+    <span class="string">"esModuleInterop"</span>: <span class="keyword">true</span>,
+    <span class="comment">/* --- Decorator Options --- */</span>
+    <span class="string">"experimentalDecorators"</span>: <span class="keyword">true</span>,
+    <span class="string">"emitDecoratorMetadata"</span>: <span class="keyword">true</span>
+  }
+}</code></pre>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('#navigation .nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            const runButtons = document.querySelectorAll('.run-btn');
+
+            function showSection(hash) {
+                // Default to #welcome if no hash or invalid hash
+                if (!hash || !document.querySelector(hash)) {
+                    hash = '#welcome';
+                }
+
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === hash) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+
+                contentSections.forEach(section => {
+                    if ('#' + section.id === hash) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    window.location.hash = targetId;
+                    showSection(targetId);
+                });
+            });
+
+            runButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const section = button.closest('.content-section');
+                    const codeBlock = section.querySelector('pre.code-block code');
+                    const outputBox = section.querySelector('.output-box');
+
+                    let codeToRun = codeBlock.textContent;
+                    
+                    // Simple transformations to make code runnable in browser
+                    codeToRun = codeToRun.replace(/<span class="[^"]*">/g, '').replace(/<\/span>/g, '');
+                    codeToRun = codeToRun.replace(/console.error/g, 'console.log'); // Redirect errors to log for display
+
+                    // Handle namespace splitting simulation
+                    if (section.id === 'file-splitting') {
+                       codeToRun = `
+                        namespace StringUtility {
+                            export function ToCapital(str) {
+                                return str.toUpperCase();
+                            }
+                        }
+                        
+                        namespace MyCompany {
+                            class Employee {
+                                constructor(name, code) {
+                                    this.empName = StringUtility.ToCapital(name);
+                                    this.empCode = code;
+                                }
+                                displayEmployee() {
+                                    console.log(\`Employee Code: \${this.empCode}, Employee Name: \${this.empName}\`);
+                                }
+                            }
+                            let emp = new Employee('john doe', 101);
+                            emp.displayEmployee();
+                        }
+                       `;
+                    }
+
+                    let output = '';
+                    const originalLog = console.log;
+                    console.log = (...args) => {
+                        output += args.map(arg => {
+                            if (typeof arg === 'object' && arg !== null) {
+                                try {
+                                    const cache = new Set();
+                                    return JSON.stringify(arg, (key, value) => {
+                                        if (typeof value === 'object' && value !== null) {
+                                            if (cache.has(value)) return '[Circular]';
+                                            cache.add(value);
+                                        }
+                                        return value;
+                                    }, 2);
+                                } catch (e) {
+                                    return '[Unserializable Object]';
+                                }
+                            }
+                            return String(arg);
+                        }).join(' ') + '\n';
+                    };
+
+                    try {
+                        // Correctly configure Babel to transpile legacy decorators
+                        const transformedCode = Babel.transform(codeToRun, {
+                            presets: ['typescript'],
+                            plugins: [
+                                // Enable legacy decorators and class properties for correct transpilation
+                                ['proposal-decorators', { legacy: true }],
+                                'proposal-class-properties'
+                            ],
+                            filename: 'script.ts' // Helps Babel with context
+                        }).code;
+                        eval(transformedCode);
+                    } catch (e) {
+                        output = `Error: ${e.message}`;
+                    } finally {
+                        console.log = originalLog;
+                        outputBox.textContent = output || 'No output logged to console.';
+                    }
+                });
+            });
+            
+            // Show initial section based on URL hash
+            showSection(window.location.hash);
+        });
+    </script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/preset-typescript/standalone.js"></script>
+</body>
+</html>
+
+
