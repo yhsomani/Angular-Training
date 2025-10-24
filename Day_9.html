@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OOP Bank & Concepts UI (HTML)</title>
+    <!-- Load Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom style for the active tab's inner shadow */
+        .shadow-inner-top {
+            box-shadow: inset 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        
+        /* Hide content views by default */
+        [data-view-content] {
+            display: none;
+        }
+        
+        /* Show the active content view */
+        [data-view-content].active {
+            display: block;
+        }
+
+        /* Simple animation for alerts */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+        .alert-fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+        .alert-fade-out {
+             animation: fadeOut 0.3s ease-in forwards;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased h-full bg-gray-100">
+
+    <!-- Alert Container -->
+    <div id="alert-container" class="fixed top-4 right-4 z-50 w-full max-w-sm space-y-2">
+        <!-- Alerts will be injected here -->
+    </div>
+
+    <!-- Main App Wrapper -->
+    <div class="h-full flex flex-col">
+        <!-- Tabs -->
+        <nav class="bg-gray-800 px-4 pt-3">
+            <div class="flex space-x-1" id="tabs-container">
+                <button
+                    data-view-target="bank"
+                    class="tab-btn py-3 px-5 font-semibold transition-all duration-300 rounded-t-lg bg-gray-100 text-indigo-600 shadow-inner-top"
+                >
+                    <!-- Landmark Icon -->
+                    <span class="inline-block align-middle mr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 22 1.3-1.3a2 2 0 0 0-3.6 0L3 22Z"/><path d="m18 22 1.3-1.3a2 2 0 0 0-3.6 0L18 22Z"/><path d="M2 22h20"/><path d="m5 18-3 4"/><path d="m19 18 3 4"/><path d="m3 10 4-3 4 3"/><path d="m13 10 4-3 4 3"/><path d="M5 14v-4"/><path d="M19 14v-4"/><path d="M12 15a3 3 0 0 0-3-3H9a3 3 0 0 0-3 3v4h12v-4a3 3 0 0 0-3-3h-3a3 3 0 0 0-3 3"/></svg>
+                    </span>
+                    OOP Banking App
+                </button>
+                <button
+                    data-view-target="concepts"
+                    class="tab-btn py-3 px-5 font-semibold transition-all duration-300 rounded-t-lg bg-gray-700 text-white hover:bg-gray-600"
+                >
+                    <!-- Code Icon -->
+                    <span class="inline-block align-middle mr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </span>
+                    TS Concepts Explorer
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main id="main-content" class="flex-grow">
+            <!-- ===== BANK VIEW ===== -->
+            <div id="view-bank" data-view-content class="active">
+                
+                <!-- === LOGIN VIEW === -->
+                <div id="login-view" class="min-h-full flex items-center justify-center bg-gray-50 p-4">
+                    <div class="max-w-md w-full bg-white p-8 rounded-2xl shadow-xl">
+                        <div class="flex justify-center mb-6">
+                            <!-- Landmark Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600"><path d="m3 22 1.3-1.3a2 2 0 0 0-3.6 0L3 22Z"/><path d="m18 22 1.3-1.3a2 2 0 0 0-3.6 0L18 22Z"/><path d="M2 22h20"/><path d="m5 18-3 4"/><path d="m19 18 3 4"/><path d="m3 10 4-3 4 3"/><path d="m13 10 4-3 4 3"/><path d="M5 14v-4"/><path d="M19 14v-4"/><path d="M12 15a3 3 0 0 0-3-3H9a3 3 0 0 0-3 3v4h12v-4a3 3 0 0 0-3-3h-3a3 3 0 0 0-3 3"/></svg>
+                        </div>
+                        <h2 id="login-title" class="text-3xl font-extrabold text-center text-gray-900 mb-4">
+                            Welcome to OOP Bank
+                        </h2>
+                        
+                        <!-- Login Form -->
+                        <form id="login-form" class="space-y-6">
+                            <div id="login-name-field" class="hidden">
+                                <label class="block text-sm font-medium text-gray-700">Full Name</label>
+                                <div class="mt-1 relative">
+                                    <!-- User Icon -->
+                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    </span>
+                                    <input name="name" type="text" placeholder="Alice Smith"
+                                        class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                </div>
+                            </div>
+
+                            <div id="login-customer-id-field">
+                                <label class="block text-sm font-medium text-gray-700">Customer ID</label>
+                                <div class="mt-1 relative">
+                                    <!-- User Icon -->
+                                     <span class="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    </span>
+                                    <input name="customerId" type="text" placeholder="CUST-123456789"
+                                        class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Password</label>
+                                <div class="mt-1 relative">
+                                    <!-- KeyRound Icon -->
+                                     <span class="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777z"/><path d="m15.5 7.5 3 3L22 7l-3-3m-3.5 3.5L19 4l-3 3.5"/></svg>
+                                    </span>
+                                    <input name="password" type="password" placeholder="••••••••"
+                                        class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                </div>
+                            </div>
+
+                            <button type="submit" id="login-submit-btn"
+                                class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1">
+                                Login
+                            </button>
+                            
+                            <p class="text-center text-sm text-gray-600">
+                                <span id="login-toggle-text">Don't have an account?</span>
+                                <button type="button" id="login-toggle-btn" class="font-medium text-indigo-600 hover:text-indigo-500 ml-1">
+                                    Create one
+                                </button>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- === BANK DASHBOARD VIEW === -->
+                <div id="dashboard-view" class="min-h-full bg-gray-100 p-4 md:p-8 hidden">
+                    <header class="flex justify-between items-center mb-6">
+                        <div class="flex items-center space-x-3">
+                            <!-- Landmark Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600"><path d="m3 22 1.3-1.3a2 2 0 0 0-3.6 0L3 22Z"/><path d="m18 22 1.3-1.3a2 2 0 0 0-3.6 0L18 22Z"/><path d="M2 22h20"/><path d="m5 18-3 4"/><path d="m19 18 3 4"/><path d="m3 10 4-3 4 3"/><path d="m13 10 4-3 4 3"/><path d="M5 14v-4"/><path d="M19 14v-4"/><path d="M12 15a3 3 0 0 0-3-3H9a3 3 0 0 0-3 3v4h12v-4a3 3 0 0 0-3-3h-3a3 3 0 0 0-3 3"/></svg>
+                            <h1 class="text-3xl font-bold text-gray-800">
+                                Welcome, <span id="user-name" class="text-indigo-600"></span>
+                            </h1>
+                        </div>
+                        <button id="logout-btn"
+                            class="flex items-center space-x-2 bg-white text-gray-700 px-4 py-2 rounded-lg shadow-md hover:bg-red-50 hover:text-red-600 transition duration-300">
+                            <!-- LogOut Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                            <span>Logout</span>
+                        </button>
+                    </header>
+
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <!-- Left Column: Accounts List -->
+                        <div class="w-full md:w-1/3 space-y-4">
+                            <h2 class="text-2xl font-semibold text-gray-700 mb-3">Your Accounts</h2>
+                            <div id="accounts-list-container">
+                                <!-- AccountCards will be injected here -->
+                            </div>
+                            <button id="show-create-account-btn"
+                                class="w-full flex items-center justify-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
+                                <!-- Plus Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+                                <span>Create New Account</span>
+                            </button>
+                        </div>
+
+                        <!-- Right Column: Details & Actions -->
+                        <div class="w-full md:w-2/3" id="main-dashboard-panel">
+                            <!-- This will be filled with:
+                                1. Create Account Form
+                                2. Account Details & Actions
+                                3. Placeholder
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== CONCEPTS VIEW ===== -->
+            <div id="view-concepts" data-view-content class="bg-gray-100 min-h-full">
+                <div class="p-4 md:p-8">
+                    <h1 class="text-3xl font-bold text-gray-800 mb-6">TypeScript Concepts Explorer</h1>
+                    <div class="flex flex-col md:flex-row gap-6 h-[80vh]">
+                        <!-- Code Pane -->
+                        <div class="w-full md:w-1/2 bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col">
+                            <h2 class="text-xl font-semibold text-gray-700 p-4 border-b flex items-center space-x-2">
+                                <!-- Code Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                <span>JavaScript Code (Emulating TS)</span>
+                            </h2>
+                            <pre class="p-4 text-sm font-mono overflow-auto h-full bg-gray-50"><code id="concepts-code-output"></code></pre>
+                        </div>
+                        
+                        <!-- Output Pane -->
+                        <div class="w-full md:w-1/2 bg-gray-900 text-white rounded-2xl shadow-xl overflow-hidden flex flex-col">
+                            <h2 class="text-xl font-semibold text-gray-200 p-4 border-b border-gray-700 flex items-center space-x-2">
+                                <!-- Terminal Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>
+                                <span>Console Output</span>
+                            </h2>
+                            <pre class="p-4 text-sm font-mono overflow-auto h-full"><code id="concepts-console-output"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- =========== JAVASCRIPT LOGIC =========== -->
+    <script type="module">
+        // --- BEGIN PORTED BANKING LOGIC (TypeScript to JavaScript) ---
+        // All type annotations removed, 'abstract' and 'readonly' keywords removed.
+        // 'protected' becomes a convention (e.g., _balance).
+
+        const TransactionType = {
+            DEPOSIT: 'DEPOSIT',
+            WITHDRAWAL: 'WITHDRAWAL',
+            TRANSFER: 'TRANSFER',
+            TRANSFER_REVERSAL: 'TRANSFER_REVERSAL'
+        };
+
+        class Transaction {
+            constructor(type, amount, fromAccount, toAccount) {
+                this.type = type;
+                this.amount = amount;
+                this.fromAccount = fromAccount;
+                this.toAccount = toAccount;
+                this.date = new Date();
+            }
+
+            toString() {
+                const timestamp = this.date.toLocaleString();
+                if (this.toAccount) {
+                    if (this.type === TransactionType.DEPOSIT) {
+                        return `[${timestamp}] TRANSFER: +$${this.amount.toFixed(2)} from account ${this.fromAccount}`;
+                    }
+                    if (this.type === TransactionType.WITHDRAWAL) {
+                        return `[${timestamp}] TRANSFER: -$${this.amount.toFixed(2)} to account ${this.toAccount}`;
+                    }
+                }
+                // Handle TRANSFER_REVERSAL
+                if (this.type === TransactionType.TRANSFER_REVERSAL) {
+                    return `[${timestamp}] TRANSFER REVERSAL: +$${this.amount.toFixed(2)} (Failed transfer)`;
+                }
+                
+                // Standard deposit or withdrawal
+                return `[${timestamp}] ${this.type}: $${this.amount.toFixed(2)}`;
+            }
+        }
+
+        class BankAccount {
+            constructor(accountNumber, initialBalance) {
+                this.accountNumber = accountNumber;
+                this._balance = initialBalance;
+                this.transactions = [];
+                // Add initial balance as first transaction
+                if (initialBalance > 0) {
+                    this.transactions.push(new Transaction(TransactionType.DEPOSIT, initialBalance, "INITIAL", accountNumber));
+                }
+            }
+
+            get balance() {
+                return this._balance;
+            }
+
+            deposit(amount, fromAccount, type = TransactionType.DEPOSIT) {
+                if (amount <= 0) {
+                    throw new Error("Deposit amount must be positive.");
+                }
+                this._balance += amount;
+                const transactionType = fromAccount ? TransactionType.DEPOSIT : type;
+                const from = fromAccount || this.accountNumber;
+                const to = fromAccount ? this.accountNumber : undefined;
+                this.transactions.push(new Transaction(transactionType, amount, from, to));
+                console.log(`Deposited $${amount.toFixed(2)}. New balance: $${this._balance.toFixed(2)}`);
+            }
+
+            // This was 'abstract' in TS. In JS, we throw an error if not implemented.
+            withdraw(amount, toAccount) {
+                throw new Error("Withdrawal method must be implemented by a subclass.");
+            }
+
+            getBalance() {
+                return this._balance;
+            }
+
+            getTransactionHistory() {
+                return this.transactions;
+            }
+        }
+
+        class CheckingAccount extends BankAccount {
+            constructor(accountNumber, initialBalance, overdraftLimit = 0) {
+                super(accountNumber, initialBalance);
+                this.overdraftLimit = overdraftLimit;
+            }
+            
+            // POLYMORPHISM: This overrides the base class method
+            withdraw(amount, toAccount) {
+                if (amount <= 0) {
+                    throw new Error("Withdrawal amount must be positive.");
+                }
+                if (this._balance - amount < -this.overdraftLimit) {
+                    throw new Error(`Overdraft limit of $${this.overdraftLimit.toFixed(2)} exceeded. Current balance: $${this._balance.toFixed(2)}`);
+                }
+                this._balance -= amount;
+                this.transactions.push(new Transaction(TransactionType.WITHDRAWAL, amount, this.accountNumber, toAccount));
+                console.log(`Withdrew $${amount.toFixed(2)}. New balance: $${this._balance.toFixed(2)}`);
+            }
+        }
+
+        class SavingsAccount extends BankAccount {
+            constructor(accountNumber, initialBalance, minimumBalance = 100) {
+                super(accountNumber, initialBalance);
+                this.minimumBalance = minimumBalance;
+                if (initialBalance < this.minimumBalance) {
+                    throw new Error(`Initial balance ($${initialBalance.toFixed(2)}) cannot be less than the minimum balance of $${this.minimumBalance.toFixed(2)}`);
+                }
+            }
+            
+            // POLYMORPHISM: This overrides the base class method
+            withdraw(amount, toAccount) {
+                if (amount <= 0) {
+                    throw new Error("Withdrawal amount must be positive.");
+                }
+                if (this._balance - amount < this.minimumBalance) {
+                    throw new Error(`Insufficient funds. Cannot withdraw below minimum balance of $${this.minimumBalance.toFixed(2)}. Current balance: $${this._balance.toFixed(2)}`);
+                }
+                this._balance -= amount;
+                this.transactions.push(new Transaction(TransactionType.WITHDRAWAL, amount, this.accountNumber, toAccount));
+                console.log(`Withdrew $${amount.toFixed(2)}. New balance: $${this._balance.toFixed(2)}`);
+            }
+        }
+
+        class Customer {
+            constructor(id, name, password) {
+                this.id = id;
+                this.name = name;
+                this.password = password; // In a real app, this should be hashed!
+                this.accounts = [];
+            }
+
+            addAccount(account) {
+                this.accounts.push(account);
+            }
+
+            getAccounts() {
+                return this.accounts;
+            }
+
+            validatePassword(password) {
+                return this.password === password;
+            }
+        }
+
+        class BankService {
+            constructor() {
+                this.customers = new Map();
+                this.accounts = new Map();
+                this.nextAccountNumber = 1001;
+            }
+
+            createCustomer(name, password) {
+                const id = `CUST-${Date.now()}`;
+                const customer = new Customer(id, name, password);
+                this.customers.set(id, customer);
+                console.log(`Customer ${name} created with ID ${id}`);
+                return customer;
+            }
+
+            createSavingsAccount(customer, initialBalance, minimumBalance = 100) {
+                const accountNumber = `SAV-${this.nextAccountNumber++}`;
+                const account = new SavingsAccount(accountNumber, initialBalance, minimumBalance);
+                customer.addAccount(account);
+                this.accounts.set(accountNumber, account);
+                console.log(`Savings account ${accountNumber} created for ${customer.name}`);
+                return account;
+            }
+
+            createCheckingAccount(customer, initialBalance, overdraftLimit = 0) {
+                const accountNumber = `CHK-${this.nextAccountNumber++}`;
+                const account = new CheckingAccount(accountNumber, initialBalance, overdraftLimit);
+                customer.addAccount(account);
+                this.accounts.set(accountNumber, account);
+                console.log(`Checking account ${accountNumber} created for ${customer.name}`);
+                return account;
+            }
+
+            getAccount(accountNumber) {
+                const account = this.accounts.get(accountNumber);
+                if (!account) {
+                    throw new Error("Account not found.");
+                }
+                return account;
+            }
+
+            getCustomer(customerId) {
+                const customer = this.customers.get(customerId);
+                if (!customer) {
+                    throw new Error("Customer not found.");
+                }
+                return customer;
+            }
+            
+            getCustomers() {
+                return Array.from(this.customers.values());
+            }
+
+            getAccountsForCustomer(customerId) {
+                const customer = this.getCustomer(customerId);
+                return customer.getAccounts();
+            }
+
+            login(customerId, password) {
+                const customer = this.getCustomer(customerId); // Throws if not found
+                if (!customer.validatePassword(password)) {
+                    throw new Error("Invalid customer ID or password.");
+                }
+                console.log(`\nWelcome, ${customer.name}!`);
+                return customer;
+            }
+
+            deposit(accountNumber, amount) {
+                const account = this.getAccount(accountNumber);
+                account.deposit(amount);
+            }
+
+            withdraw(accountNumber, amount) {
+                const account = this.getAccount(accountNumber);
+                account.withdraw(amount);
+            }
+
+            transfer(fromAccountNumber, toAccountNumber, amount) {
+                if (fromAccountNumber === toAccountNumber) {
+                    throw new Error("Cannot transfer to the same account.");
+                }
+                const fromAccount = this.getAccount(fromAccountNumber);
+                const toAccount = this.getAccount(toAccountNumber);
+
+                // This will throw if rules are violated (e.g., min balance)
+                fromAccount.withdraw(amount, toAccountNumber);
+
+                try {
+                    toAccount.deposit(amount, fromAccountNumber);
+                    console.log(`Transfer of $${amount.toFixed(2)} from ${fromAccountNumber} to ${toAccountNumber} successful.`);
+                } catch (error) {
+                    console.error(`Transfer failed during deposit. Refunding source account...`);
+                    // Simple "rollback"
+                    fromAccount.deposit(amount, undefined, TransactionType.TRANSFER_REVERSAL);
+                    throw error;
+                }
+            }
+        }
+        // --- END PORTED BANKING LOGIC ---
+
+
+        // --- BEGIN PORTED TYPESCRIPT EXAMPLES LOGIC ---
+        function printValue(value) {
+            if (typeof value === "string" || typeof value === "number") {
+                console.log(value);
+            } else if (Array.isArray(value)) {
+                console.log(value.join(", "));
+            } else if (value !== null && typeof value === "object") {
+                console.log(JSON.stringify(value, null, 2));
+            } else {
+                console.log("Unknown or null value");
+            }
+        }
+
+        const PRINT_VALUE_CODE_STRING = `
+function printValue(value) {
+    if (typeof value === "string" || typeof value === "number") {
+        console.log(value);
+    } else if (Array.isArray(value)) {
+        console.log(value.join(", "));
+    } else if (value !== null && typeof value === "object") {
+        console.log(JSON.stringify(value, null, 2));
+    } else {
+        console.log("Unknown or null value");
+    }
+}
+
+// Testing
+printValue("Hello world");
+printValue(123);
+printValue(["apple", "banana"]);
+printValue([10, 20, 30]);
+printValue({ name: "Alice", age: 25 });
+printValue(null);
+`.trim();
+
+
+        class TypeScriptExamples {
+            static sayHello() { return 'Hello World'; }
+            static definingAndAccessingTuple() {
+                console.log("--- 1. Defining and Accessing a Tuple ---");
+                let myTuple;
+                myTuple = ["hello", 123, true]; 
+                console.log(`myTuple[0]: ${myTuple[0]}`); 
+                console.log(`myTuple[1]: ${myTuple[1]}`);
+                console.log(`myTuple[2]: ${myTuple[2]}`);
+                console.log("\n");
+            }
+            static tuplePushAndPop() {
+                console.log("--- 2. Push and Pop Operations ---");
+                let employee = [1, "Steve"];
+                console.log("Original employee tuple:", employee);
+                employee.push(2, "Bill");
+                console.log("After push(2, 'Bill'):", employee);
+                let empTuple = ["Mohit", 25, "TypeScript", 10001];
+                console.log("Original empTuple:", empTuple);
+                empTuple.pop();
+                console.log("After pop():", empTuple);
+                console.log(`Length after pop: ${empTuple.length}`); 
+                console.log("\n");
+            }
+            static updatingTupleElements() {
+                console.log("--- 3. Updating Tuple Elements ---");
+                let empTuple = ["Ganesh", 25, "TCS"];
+                console.log(`Original: Name: ${empTuple[0]}, Age: ${empTuple[1]}, Company: ${empTuple[2]}`);
+                empTuple[1] = 60;
+                console.log(`Updated:  Name: ${empTuple[0]}, Age: ${empTuple[1]}, Company: ${empTuple[2]}`);
+                console.log("\n");
+            }
+            static clearingTuple() {
+                console.log("--- 4. Clearing a Tuple ---");
+                let empTuple = ["Rohit Sharma", 25, "TypeScript"];
+                console.log("Before clearing:", empTuple);
+                empTuple = [];
+                console.log("After clearing:", empTuple);
+                console.log("\n");
+            }
+            static destructuringTuple() {
+                console.log("--- 5. Destructuring Tuples ---");
+                let empTuple = ["Rohit Sharma", 25, "TypeScript"];
+                let [name, age] = empTuple;
+                console.log("Original tuple:", empTuple);
+                console.log(`Destructured name: ${name}`);
+                console.log(`Destructured age: ${age}`);
+                console.log("\n");
+            }
+            static passingTupleToFunction() {
+                console.log("--- 6. Passing Tuples to Functions ---");
+                let empTuple = ["TypeScript", 101, "Rajesh"];
+                function display(tupleValues) {
+                    console.log("Displaying tuple elements individually:");
+                    for (let i = 0; i < tupleValues.length; i++) {
+                        console.log(` -> Element ${i}: ${tupleValues[i]}`);
+                    }
+                }
+                function displayDestructured([skill, id, name]) {
+                    console.log("\nDisplaying with destructuring:");
+                    console.log(` -> Name: ${name}, ID: ${id}, Skill: ${skill}`);
+                }
+                display(empTuple);
+                displayDestructured(empTuple);
+                console.log("\n");
+            }
+            static readonlyTupleExample() {
+                console.log("--- 7. Readonly Tuples (Concept) ---");
+                let readonlyTuple = ["Alice", 30];
+                console.log("Readonly tuple:", readonlyTuple);
+                console.log("In TS, modifying this would cause a compile error.");
+                console.log("In JS, this concept doesn't exist, but we can use Object.freeze()");
+                Object.freeze(readonlyTuple);
+                try { readonlyTuple[1] = 31; } catch(e) { console.log("Error trying to modify frozen array:", e.message); }
+                console.log("\n");
+            }
+            static numericEnumDefault() {
+                console.log("--- 8. Numeric Enums (Default) ---");
+                const CardinalDirections = { North: 0, East: 1, South: 2, West: 3 };
+                let currentDirection = CardinalDirections.North;
+                console.log("currentDirection:", currentDirection); 
+                console.log("CardinalDirections.West:", CardinalDirections.West);
+                console.log("\n");
+            }
+            static numericEnumInitialized() {
+                console.log("--- 9. Numeric Enums (Initialized) ---");
+                const CardinalDirections = { North: 1, East: 2, South: 3, West: 4 };
+                console.log("CardinalDirections.North:", CardinalDirections.North);
+                console.log("CardinalDirections.West:", CardinalDirections.West);
+                const StatusCodes = { NotFound: 404, Success: 200, Accepted: 202, BadRequest: 400 };
+                console.log("StatusCodes.NotFound:", StatusCodes.NotFound);
+                console.log("StatusCodes.Success:", StatusCodes.Success);
+                console.log("\n");
+            }
+            static stringEnumExample() {
+                console.log("--- 10. String Enums ---");
+                const CardinalDirections = { North: 'North', East: "East", South: "South", West: "West" };
+                console.log("CardinalDirections.North:", CardinalDirections.North);
+                console.log("CardinalDirections.West:", CardinalDirections.West);
+                console.log("\n");
+            }
+            static genericsExample() {
+                console.log("--- 11. Generic Classes (Concept) ---");
+                console.log("In TS, Generics provide type safety at compile time.");
+                console.log("In JS, this isn't enforced, but the pattern is the same.");
+                class Vehicle { constructor(value) { this.contents = value; } }
+                const car = new Vehicle("BMV");
+                console.log("Vehicle with string:", car.contents);
+                const carList = new Vehicle(["BMV", "Audi"]);
+                console.log("Vehicle with string array:", carList.contents);
+                const serialNumbers = new Vehicle(12345);
+                console.log("Vehicle with number:", serialNumbers.contents);
+                const carAndSerialNumbers = new Vehicle([
+                    { serialNumbers: 1233, carName: "BMV" },
+                    { serialNumbers: 4567, carName: "Audi" }
+                ]);
+                console.log("Vehicle with object array:", carAndSerialNumbers.contents);
+                console.log("\n");
+            }
+            static genericFunctionExample() {
+                console.log("--- 12. Generic Functions (Concept) ---");
+                function getFirstElement(arr) { return arr[0]; }
+                const stringArray = ["Apple", "Banana", "Cherry"];
+                const firstString = getFirstElement(stringArray);
+                console.log(`First element of string array: ${firstString}`);
+                const numberArray = [10, 20, 30];
+                const firstNumber = getFirstElement(numberArray);
+                console.log(`First element of number array: ${firstNumber}`);
+                console.log("\n");
+            }
+            static readonlyPropertiesExample() {
+                console.log("--- 13. Readonly Properties (Concept) ---");
+                class Octopus {
+                    constructor(name) {
+                        this.name = name;
+                        this.numberOfLegs = 8;
+                        Object.freeze(this);
+                    }
+                }
+                let d1 = new Octopus("Man with the 8 strong legs");
+                console.log(`Octopus name: ${d1.name}`);
+                try { d1.name = "New Name"; console.log("Attempted to change name..."); } catch(e) { console.log("Error trying to modify frozen object:", e.message); }
+                console.log(`Octopus name after attempt: ${d1.name}`);
+                console.log("\n");
+            }
+            static gettersAndSettersExample() {
+                console.log("--- 14. Getters and Setters ---");
+                class Complex {
+                    constructor(real, imag) { this._real = real; this._imag = imag; }
+                    get real() { return this._real; }
+                    get imag() { return this._imag; }
+                    set real(real) { console.log(`Setting real part to ${real}`); this._real = real; }
+                    set imag(imag) { console.log(`Setting imaginary part to ${imag}`); this._imag = imag; }
+                    showValues() { console.log(`Values are ${this._real} and ${this._imag}`); }
+                }
+                let c1 = new Complex(100, 200);
+                console.log("Initial state:"); c1.showValues();
+                c1.real = 500; c1.imag = 1000;
+                console.log(`Get real part: ${c1.real}`);
+                console.log(`Get imaginary part: ${c1.imag}`);
+                console.log("Final state:"); c1.showValues();
+                console.log("\n");
+            }
+        }
+
+        const TS_EXAMPLES_CODE_STRING = `
+class TypeScriptExamples {
+    // ... (All static methods as defined above) ...
+    static sayHello() { ... }
+    static definingAndAccessingTuple() { ... }
+    // ... all other methods
+    static gettersAndSettersExample() { ... }
+}
+// --- Running all the examples ---
+console.log("====== TypeScript Examples (JS Emulation) ======\n");
+console.log("TypeScriptExamples.sayHello() returns:", TypeScriptExamples.sayHello());
+TypeScriptExamples.definingAndAccessingTuple();
+TypeScriptExamples.tuplePushAndPop();
+TypeScriptExamples.updatingTupleElements();
+TypeScriptExamples.clearingTuple();
+TypeScriptExamples.destructuringTuple();
+TypeScriptExamples.passingTupleToFunction();
+TypeScriptExamples.readonlyTupleExample();
+TypeScriptExamples.numericEnumDefault();
+TypeScriptExamples.numericEnumInitialized();
+TypeScriptExamples.stringEnumExample();
+TypeScriptExamples.genericsExample();
+TypeScriptExamples.genericFunctionExample();
+TypeScriptExamples.readonlyPropertiesExample();
+TypeScriptExamples.gettersAndSettersExample();
+console.log("================= End of Examples ==================");
+`.trim();
+
+        const ALL_CONCEPTS_CODE_STRING = `${PRINT_VALUE_CODE_STRING}\n\n// ==================\n\n${TS_EXAMPLES_CODE_STRING}`;
+        // --- END PORTED TYPESCRIPT EXAMPLES LOGIC ---
+
+
+        // --- BEGIN VANILLA JS APPLICATION STATE AND RENDERER ---
+
+        // Global-like state for the application
+        const state = {
+            bank: null,
+            currentUser: null,
+            view: 'bank', // 'bank' or 'concepts'
+            error: null,
+            success: null,
+            selectedAccount: null,
+            action: null, // 'deposit', 'withdraw', 'transfer', 'create'
+            isCreateMode: false,
+        };
+
+        // --- DOM Element Selectors ---
+        const alertContainer = document.getElementById('alert-container');
+        const tabsContainer = document.getElementById('tabs-container');
+        const viewBank = document.getElementById('view-bank');
+        const viewConcepts = document.getElementById('view-concepts');
+        const loginView = document.getElementById('login-view');
+        const dashboardView = document.getElementById('dashboard-view');
+        const loginForm = document.getElementById('login-form');
+        const loginTitle = document.getElementById('login-title');
+        const loginNameField = document.getElementById('login-name-field');
+        const loginCustomerIdField = document.getElementById('login-customer-id-field');
+        const loginSubmitBtn = document.getElementById('login-submit-btn');
+        const loginToggleText = document.getElementById('login-toggle-text');
+        const loginToggleBtn = document.getElementById('login-toggle-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const userNameEl = document.getElementById('user-name');
+        const accountsListContainer = document.getElementById('accounts-list-container');
+        const showCreateAccountBtn = document.getElementById('show-create-account-btn');
+        const mainDashboardPanel = document.getElementById('main-dashboard-panel');
+        const conceptsCodeOutput = document.getElementById('concepts-code-output');
+        const conceptsConsoleOutput = document.getElementById('concepts-console-output');
+
+        // --- SVG Icons ---
+        const ICONS = {
+            briefcase: '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+            piggyBank: '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-pink-500"><path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2Z"/><path d="M2 9v1c0 1.1.9 2 2 2h1"/><path d="M16 5h0"/></svg>',
+            arrowDownToLine: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg>',
+            arrowUpFromLine: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7V21"/><path d="m6 13 6-6 6 6"/><path d="M19 3H5"/></svg>',
+            arrowLeftRight: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg>',
+            dollarSign: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+            landmark: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"><path d="m3 22 1.3-1.3a2 2 0 0 0-3.6 0L3 22Z"/><path d="m18 22 1.3-1.3a2 2 0 0 0-3.6 0L18 22Z"/><path d="M2 22h20"/><path d="m5 18-3 4"/><path d="m19 18 3 4"/><path d="m3 10 4-3 4 3"/><path d="m13 10 4-3 4 3"/><path d="M5 14v-4"/><path d="M19 14v-4"/><path d="M12 15a3 3 0 0 0-3-3H9a3 3 0 0 0-3 3v4h12v-4a3 3 0 0 0-3-3h-3a3 3 0 0 0-3 3"/></svg>',
+            clipboardList: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>',
+        };
+
+        // --- Render Functions ---
+
+        /** Shows an alert message */
+        function showAlert(message, type = 'error') {
+            if (type === 'error') state.error = message;
+            if (type === 'success') state.success = message;
+            renderAlerts();
+        }
+
+        /** Clears all alert messages */
+        function clearAlerts() {
+            state.error = null;
+            state.success = null;
+            renderAlerts();
+        }
+
+        /** Renders the alert box */
+        function renderAlerts() {
+            alertContainer.innerHTML = '';
+            let alertHTML = '';
+            if (state.error) {
+                alertHTML = `
+                <div class="border border-red-400 bg-red-100 text-red-700 px-4 py-3 rounded-lg relative shadow-md alert-fade-in" role="alert">
+                    <strong class="font-bold mr-2">Error!</strong>
+                    <span class="block sm:inline">${state.error}</span>
+                    <button data-dismiss="alert" class="absolute top-0 bottom-0 right-0 px-4 py-3 text-red-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                    </button>
+                </div>`;
+            } else if (state.success) {
+                alertHTML = `
+                <div class="border border-green-400 bg-green-100 text-green-700 px-4 py-3 rounded-lg relative shadow-md alert-fade-in" role="alert">
+                    <strong class="font-bold mr-2">Success!</strong>
+                    <span class="block sm:inline">${state.success}</span>
+                    <button data-dismiss="alert" class="absolute top-0 bottom-0 right-0 px-4 py-3 text-green-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                    </button>
+                </div>`;
+                // Auto-dismiss success after 3 seconds
+                setTimeout(clearAlerts, 3000);
+            }
+            alertContainer.innerHTML = alertHTML;
+        }
+
+        /** Renders the main view (tabs and content) */
+        function render() {
+            // Render Tabs
+            tabsContainer.querySelectorAll('.tab-btn').forEach(btn => {
+                const target = btn.dataset.viewTarget;
+                if (target === state.view) {
+                    btn.className = "tab-btn py-3 px-5 font-semibold transition-all duration-300 rounded-t-lg bg-gray-100 text-indigo-600 shadow-inner-top";
+                } else {
+                    btn.className = "tab-btn py-3 px-5 font-semibold transition-all duration-300 rounded-t-lg bg-gray-700 text-white hover:bg-gray-600";
+                }
+            });
+
+            // Render Content Views
+            document.querySelectorAll('[data-view-content]').forEach(view => {
+                if (view.id === `view-${state.view}`) {
+                    view.classList.add('active');
+                } else {
+                    view.classList.remove('active');
+                }
+            });
+
+            // Render specific view content
+            if (state.view === 'bank') {
+                renderBankView();
+            } else if (state.view === 'concepts') {
+                renderConceptsView();
+            }
+        }
+        
+        /** Renders the Bank View (Login or Dashboard) */
+        function renderBankView() {
+            if (state.currentUser) {
+                loginView.classList.add('hidden');
+                dashboardView.classList.remove('hidden');
+                renderDashboard();
+            } else {
+                loginView.classList.remove('hidden');
+                dashboardView.classList.add('hidden');
+                renderLoginView();
+            }
+        }
+
+        /** Renders the Login/Create Customer form state */
+        function renderLoginView() {
+            if (state.isCreateMode) {
+                loginTitle.textContent = 'Create New Customer';
+                loginNameField.classList.remove('hidden');
+                loginCustomerIdField.classList.add('hidden');
+                loginSubmitBtn.textContent = 'Create Account';
+                loginToggleText.textContent = 'Already have an account?';
+                loginToggleBtn.textContent = 'Login';
+                loginForm.dataset.mode = 'create';
+            } else {
+                loginTitle.textContent = 'Welcome to OOP Bank';
+                loginNameField.classList.add('hidden');
+                loginCustomerIdField.classList.remove('hidden');
+                loginSubmitBtn.textContent = 'Login';
+                loginToggleText.textContent = "Don't have an account?";
+                loginToggleBtn.textContent = 'Create one';
+                loginForm.dataset.mode = 'login';
+            }
+        }
+        
+        /** Renders the entire dashboard */
+        function renderDashboard() {
+            if (!state.currentUser) return;
+
+            userNameEl.textContent = state.currentUser.name;
+            
+            // Render Accounts List
+            const accounts = state.currentUser.getAccounts();
+            if (accounts.length === 0) {
+                accountsListContainer.innerHTML = '<p class="text-gray-500">You have no accounts yet.</p>';
+            } else {
+                accountsListContainer.innerHTML = accounts.map(acc => {
+                    const isChecking = acc instanceof CheckingAccount;
+                    const isSelected = state.selectedAccount?.accountNumber === acc.accountNumber;
+                    const icon = isChecking ? ICONS.briefcase : ICONS.piggyBank;
+                    const details = isChecking 
+                        ? `<p class="text-xs text-gray-500">Overdraft: $${acc.overdraftLimit.toFixed(2)}</p>`
+                        : `<p class="text-xs text-red-500">Min: $${acc.minimumBalance.toFixed(2)}</p>`;
+                    
+                    return `
+                    <button
+                        data-account-number="${acc.accountNumber}"
+                        class="account-card-btn w-full text-left p-5 bg-white rounded-2xl shadow-lg ${isSelected ? 'ring-4 ring-indigo-500 shadow-2xl' : 'hover:shadow-xl hover:bg-gray-50'} transition-all duration-300 transform hover:scale-105"
+                    >
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                ${icon}
+                                <div>
+                                    <p class="font-semibold text-lg text-gray-800">${acc.constructor.name}</p>
+                                    <p class="text-sm text-gray-500">${acc.accountNumber}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-xl text-green-600">$${acc.balance.toFixed(2)}</p>
+                                ${details}
+                            </div>
+                        </div>
+                    </button>`;
+                }).join('');
+            }
+            
+            // Render Main Panel
+            if (state.action === 'create') {
+                mainDashboardPanel.innerHTML = getCreateAccountFormHTML();
+            } else if (state.selectedAccount) {
+                mainDashboardPanel.innerHTML = getAccountDetailsHTML(state.selectedAccount);
+            } else {
+                mainDashboardPanel.innerHTML = `
+                <div class="bg-white p-10 rounded-2xl shadow-xl text-center">
+                    <h2 class="text-2xl font-semibold text-gray-700">
+                        ${accounts.length > 0 ? "Please select an account." : "Please create an account to get started."}
+                    </h2>
+                </div>`;
+            }
+        }
+        
+        /** Returns HTML for the Create Account form */
+        function getCreateAccountFormHTML(type = 'checking') {
+            const limitLabel = type === 'checking' ? 'Overdraft Limit (default 0)' : 'Minimum Balance (default 100)';
+            const limitPlaceholder = type === 'checking' ? '0.00' : '100.00';
+            
+            return `
+            <div class="bg-white p-6 rounded-2xl shadow-xl">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Create New Account</h2>
+                <form id="create-account-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Account Type</label>
+                        <select name="type" class="w-full mt-1 py-2 px-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="checking" ${type === 'checking' ? 'selected' : ''}>Checking</option>
+                            <option value="savings" ${type === 'savings' ? 'selected' : ''}>Savings</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Initial Balance</label>
+                        <div class="mt-1 relative">
+                            ${ICONS.dollarSign}
+                            <input name="initialBalance" type="number" step="0.01" placeholder="0.00"
+                                class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label id="limit-label" class="block text-sm font-medium text-gray-700">${limitLabel}</label>
+                        <div class="mt-1 relative">
+                            ${ICONS.dollarSign}
+                            <input id="limit-input" name="limit" type="number" step="0.01" 
+                                placeholder="${limitPlaceholder}"
+                                class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition duration-300">
+                        Create Account
+                    </button>
+                </form>
+            </div>`;
+        }
+
+        /** Returns HTML for the Account Details panel */
+        function getAccountDetailsHTML(account) {
+            const isChecking = account instanceof CheckingAccount;
+            const history = [...account.getTransactionHistory()].reverse(); // Newest first
+
+            let actionFormHTML = '';
+            if (state.action === 'deposit') {
+                actionFormHTML = getActionFormHTML('Deposit', ICONS.arrowDownToLine);
+            } else if (state.action === 'withdraw') {
+                actionFormHTML = getActionFormHTML('Withdraw', ICONS.arrowUpFromLine);
+            } else if (state.action === 'transfer') {
+                actionFormHTML = getActionFormHTML('Transfer', ICONS.arrowLeftRight, true);
+            }
+            
+            return `
+            <div class="space-y-6">
+                <!-- Details & Action Toggles -->
+                <div class="bg-white p-6 rounded-2xl shadow-xl">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">Account Details</h2>
+                    <p><strong>Number:</strong> ${account.accountNumber}</p>
+                    <p><strong>Type:</strong> ${account.constructor.name}</p>
+                    <p class="text-3xl font-bold mt-2">
+                        Balance: <span class="text-green-600">$${account.balance.toFixed(2)}</span>
+                    </p>
+                    ${isChecking ? `<p class="text-sm text-gray-600">Overdraft Limit: $${account.overdraftLimit.toFixed(2)}</p>` : ''}
+                    ${!isChecking ? `<p class="text-sm text-red-600">Minimum Balance: $${account.minimumBalance.toFixed(2)}</p>` : ''}
+
+                    <div class="flex space-x-3 mt-6">
+                        <button data-action="deposit" class="action-btn flex-1 flex flex-col items-center space-y-1 p-3 bg-gray-100 rounded-lg hover:bg-indigo-100 hover:text-indigo-700 transition duration-300">
+                            ${ICONS.arrowDownToLine.replace('w-24 h-24', 'w-6 h-6')}
+                            <span class="text-sm font-medium">Deposit</span>
+                        </button>
+                        <button data-action="withdraw" class="action-btn flex-1 flex flex-col items-center space-y-1 p-3 bg-gray-100 rounded-lg hover:bg-indigo-100 hover:text-indigo-700 transition duration-300">
+                            ${ICONS.arrowUpFromLine.replace('w-24 h-24', 'w-6 h-6')}
+                            <span class="text-sm font-medium">Withdraw</span>
+                        </button>
+                        <button data-action="transfer" class="action-btn flex-1 flex flex-col items-center space-y-1 p-3 bg-gray-100 rounded-lg hover:bg-indigo-100 hover:text-indigo-700 transition duration-300">
+                            ${ICONS.arrowLeftRight.replace('w-24 h-24', 'w-6 h-6')}
+                            <span class="text-sm font-medium">Transfer</span>
+                        </button>
+                    </div>
+
+                    ${actionFormHTML ? `<div class="mt-6 border-t pt-6">${actionFormHTML}</div>` : ''}
+                </div>
+                
+                <!-- Transaction History -->
+                <div class="bg-white p-6 rounded-2xl shadow-xl">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4 flex items-center space-x-2">
+                        ${ICONS.clipboardList}
+                        <span>Transaction History</span>
+                    </h2>
+                    <div class="max-h-96 overflow-y-auto space-y-3 pr-2">
+                        ${history.length === 0 ? '<p class="text-gray-500">No transactions yet.</p>' : 
+                            history.map(tx => `<div class="text-sm p-3 bg-gray-50 rounded-lg font-mono">${tx.toString()}</div>`).join('')
+                        }
+                    </div>
+                </div>
+            </div>`;
+        }
+        
+        /** Returns HTML for a single action form (deposit, withdraw, transfer) */
+        function getActionFormHTML(title, iconSVG, isTransfer = false) {
+            return `
+            <form id="action-form" data-action-type="${title.toLowerCase()}" class="space-y-4">
+                <h3 class="text-xl font-semibold flex items-center space-x-2">
+                    ${iconSVG.replace('w-24 h-24', 'w-5 h-5')}
+                    <span>${title}</span>
+                </h3>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Amount</label>
+                    <div class="mt-1 relative">
+                        ${ICONS.dollarSign}
+                        <input type="number" name="amount" step="0.01" placeholder="0.00"
+                            class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                    </div>
+                </div>
+                ${isTransfer ? `
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">To Account Number</label>
+                    <div class="mt-1 relative">
+                        ${ICONS.landmark}
+                        <input type="text" name="toAccount" placeholder="e.g., CHK-1002"
+                            class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                    </div>
+                </div>
+                ` : ''}
+                <button type="submit"
+                    class="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition duration-300">
+                    ${title}
+                </button>
+            </form>`;
+        }
+        
+        /** Renders the Concepts Explorer view (only runs once) */
+        function renderConceptsView() {
+            if (conceptsConsoleOutput.textContent) return; // Already rendered
+
+            let logOutput = [];
+            const originalLog = console.log;
+            console.log = (...args) => {
+                logOutput.push(args.map(arg => 
+                    typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+                ).join(' '));
+            };
+            
+            try {
+                // Run printValue examples
+                console.log("====== Running printValue() Examples ======\n");
+                printValue("Hello world");
+                printValue(123);
+                printValue(["apple", "banana"]);
+                printValue([10, 20, 30]);
+                printValue({ name: "Alice", age: 25 });
+                printValue(null);
+                console.log("\n================= End of printValue() ==================\n\n");
+
+                // Run TypeScriptExamples
+                console.log("====== TypeScript Examples (JS Emulation) ======\n");
+                console.log("TypeScriptExamples.sayHello() returns:", TypeScriptExamples.sayHello());
+                TypeScriptExamples.definingAndAccessingTuple();
+                TypeScriptExamples.tuplePushAndPop();
+                TypeScriptExamples.updatingTupleElements();
+                TypeScriptExamples.clearingTuple();
+                TypeScriptExamples.destructuringTuple();
+                TypeScriptExamples.passingTupleToFunction();
+                TypeScriptExamples.readonlyTupleExample();
+                TypeScriptExamples.numericEnumDefault();
+                TypeScriptExamples.numericEnumInitialized();
+                TypeScriptExamples.stringEnumExample();
+                TypeScriptExamples.genericsExample();
+                TypeScriptExamples.genericFunctionExample();
+                TypeScriptExamples.readonlyPropertiesExample();
+                TypeScriptExamples.gettersAndSettersExample();
+                console.log("================= End of Examples ==================");
+
+            } catch (e) {
+                console.log("--- SCRIPT ERROR ---");
+                console.log(e.message);
+            } finally {
+                console.log = originalLog;
+            }
+            
+            conceptsConsoleOutput.textContent = logOutput.join('\n');
+            conceptsCodeOutput.textContent = ALL_CONCEPTS_CODE_STRING;
+        }
+
+        // --- Event Handlers ---
+
+        /** Handle Tab Clicks */
+        tabsContainer.addEventListener('click', (e) => {
+            const btn = e.target.closest('.tab-btn');
+            if (btn) {
+                state.view = btn.dataset.viewTarget;
+                clearAlerts();
+                render();
+            }
+        });
+
+        /** Handle Alert Close */
+        alertContainer.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-dismiss="alert"]');
+            if (btn) {
+                btn.parentElement.classList.add('alert-fade-out');
+                btn.parentElement.addEventListener('animationend', () => {
+                    clearAlerts();
+                });
+            }
+        });
+
+        /** Handle Login/Create Toggle */
+        loginToggleBtn.addEventListener('click', () => {
+            state.isCreateMode = !state.isCreateMode;
+            loginForm.reset();
+            clearAlerts();
+            renderLoginView();
+        });
+
+        /** Handle Login/Create Form Submit */
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearAlerts();
+            const formData = new FormData(loginForm);
+            
+            try {
+                if (state.isCreateMode) {
+                    // Create Customer
+                    const name = formData.get('name');
+                    const password = formData.get('password');
+                    if (!name || !password) throw new Error("Name and password are required.");
+                    const customer = state.bank.createCustomer(name, password);
+                    showAlert(`Customer ${customer.name} created! ID: ${customer.id}. Please log in.`, 'success');
+                    state.isCreateMode = false;
+                    loginForm.reset();
+                    renderLoginView();
+                } else {
+                    // Login
+                    const customerId = formData.get('customerId');
+                    const password = formData.get('password');
+                    const customer = state.bank.login(customerId, password);
+                    state.currentUser = customer;
+                    // Auto-select first account
+                    const accounts = customer.getAccounts();
+                    if (accounts.length > 0) {
+                        state.selectedAccount = accounts[0];
+                    }
+                    render();
+                }
+            } catch (err) {
+                showAlert(err.message, 'error');
+            }
+        });
+        
+        /** Handle Logout */
+        logoutBtn.addEventListener('click', () => {
+            state.currentUser = null;
+            state.selectedAccount = null;
+            state.action = null;
+            showAlert("You have been logged out.", 'success');
+            render();
+        });
+        
+        /** Handle clicks in the dashboard */
+        dashboardView.addEventListener('click', (e) => {
+            // Select Account
+            const accountCard = e.target.closest('.account-card-btn');
+            if (accountCard) {
+                const accNum = accountCard.dataset.accountNumber;
+                state.selectedAccount = state.bank.getAccount(accNum);
+                state.action = null;
+                clearAlerts();
+                renderDashboard();
+                return;
+            }
+            
+            // Show Create Account Form
+            if (e.target.closest('#show-create-account-btn')) {
+                state.selectedAccount = null;
+                state.action = 'create';
+                clearAlerts();
+                renderDashboard();
+                return;
+            }
+            
+            // Toggle Action Forms (Deposit, Withdraw, Transfer)
+            const actionBtn = e.target.closest('.action-btn');
+            if (actionBtn) {
+                state.action = actionBtn.dataset.action;
+                clearAlerts();
+                renderDashboard();
+                return;
+            }
+        });
+        
+        /** Handle form submissions in the dashboard */
+        dashboardView.addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearAlerts();
+            
+            // Create Account Form
+            if (e.target.id === 'create-account-form') {
+                const formData = new FormData(e.target);
+                const type = formData.get('type');
+                const initialBalance = parseFloat(formData.get('initialBalance'));
+                const limit = parseFloat(formData.get('limit'));
+                
+                if (isNaN(initialBalance)) {
+                    showAlert("Please enter a valid initial balance.", 'error');
+                    return;
+                }
+                
+                try {
+                    if (type === 'savings') {
+                        const minBalance = isNaN(limit) ? 100 : limit;
+                        state.bank.createSavingsAccount(state.currentUser, initialBalance, minBalance);
+                        showAlert(`Savings account created successfully.`, 'success');
+                    } else {
+                        const overdraft = isNaN(limit) ? 0 : limit;
+                        state.bank.createCheckingAccount(state.currentUser, initialBalance, overdraft);
+                        showAlert(`Checking account created successfully.`, 'success');
+                    }
+                    e.target.reset();
+                    state.action = null;
+                    // Auto-select the new account
+                    const accounts = state.currentUser.getAccounts();
+                    state.selectedAccount = accounts[accounts.length - 1];
+                    renderDashboard();
+                } catch(err) {
+                    showAlert(err.message, 'error');
+                }
+                return;
+            }
+            
+            // Action Form (Deposit, etc.)
+            if (e.target.id === 'action-form') {
+                const formData = new FormData(e.target);
+                const actionType = e.target.dataset.actionType;
+                const amount = parseFloat(formData.get('amount'));
+                
+                if (isNaN(amount) || amount <= 0) {
+                    showAlert("Please enter a valid positive amount.", 'error');
+                    return;
+                }
+                
+                try {
+                    const accNum = state.selectedAccount.accountNumber;
+                    switch (actionType) {
+                        case 'deposit':
+                            state.bank.deposit(accNum, amount);
+                            showAlert(`$${amount.toFixed(2)} deposited successfully.`, 'success');
+                            break;
+                        case 'withdraw':
+                            state.bank.withdraw(accNum, amount);
+                            showAlert(`$${amount.toFixed(2)} withdrawn successfully.`, 'success');
+                            break;
+                        case 'transfer':
+                            const toAccount = formData.get('toAccount');
+                            state.bank.transfer(accNum, toAccount, amount);
+                            showAlert(`$${amount.toFixed(2)} transferred to ${toAccount}.`, 'success');
+                            break;
+                    }
+                    // Refresh selected account from bank to get new balance
+                    state.selectedAccount = state.bank.getAccount(accNum);
+                    e.target.reset();
+                    renderDashboard();
+                } catch (err) {
+                    showAlert(err.message, 'error');
+                }
+                return;
+            }
+        });
+        
+        /** Handle dynamic form changes */
+        dashboardView.addEventListener('change', (e) => {
+            // Create Account form type change
+            if (e.target.name === 'type' && e.target.closest('#create-account-form')) {
+                const type = e.target.value;
+                document.getElementById('limit-label').textContent = type === 'checking' ? 'Overdraft Limit (default 0)' : 'Minimum Balance (default 100)';
+                document.getElementById('limit-input').placeholder = type === 'checking' ? '0.00' : '100.00';
+            }
+        });
+        
+        // --- Initialization ---
+        function init() {
+            // 1. Create and populate bank
+            state.bank = new BankService();
+            try {
+                const c1 = state.bank.createCustomer("Alice", "pass123");
+                const c2 = state.bank.createCustomer("Bob", "pass456");
+                state.bank.createSavingsAccount(c1, 500);
+                state.bank.createCheckingAccount(c2, 1000, 200);
+                showAlert("App pre-populated with test users 'Alice' (pass123) and 'Bob' (pass456).", 'success');
+            } catch (e) {
+                showAlert(e.message, 'error');
+            }
+            
+            // 2. Initial Render
+            render();
+        }
+
+        // Run on load
+        document.addEventListener('DOMContentLoaded', init);
+
+    </script>
+</body>
+</html>
