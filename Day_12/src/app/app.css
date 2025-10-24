@@ -1,0 +1,40 @@
+.app-nav {
+  background-color: #ffffff;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.app-title {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #333;
+}
+.nav-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.nav-btn.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+.content-wrapper {
+  padding: 1rem;
+}
+.interactions-wrapper {
+  max-width: 900px;
+  margin: 2rem auto;
+  display: grid;
+  gap: 1.5rem;
+}
+.interactions-wrapper > h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 0;
+}

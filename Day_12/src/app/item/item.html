@@ -1,0 +1,28 @@
+<div class="item">
+    <!-- Custom Checkbox -->
+    <input [id]="'item-' + item.description" type="checkbox" (change)="item.done = !item.done" [checked]="item.done" />
+    <label [for]="'item-' + item.description" class="checkbox-label">
+        {{ item.description }}
+    </label>
+
+    @if (!editable()) {
+    <div class="btn-wrapper">
+        <button class="btn" (click)="editable.set(true)">Edit</button>
+        <button class="btn btn-warn" (click)="remove.emit()" title="Delete">
+            Delete
+        </button>
+    </div>
+    } @else {
+    <!-- Edit Mode -->
+    <div>
+        <input class="sm-text-input" placeholder="edit item" [value]="item.description" #editedItem
+            (keyup.enter)="saveItem(editedItem.value)" />
+        <div class="btn-wrapper">
+            <button class="btn" (click)="editable.set(false)">Cancel</button>
+            <button class="btn btn-save" (click)="saveItem(editedItem.value)">
+                Save
+            </button>
+        </div>
+    </div>
+    }
+</div>

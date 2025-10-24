@@ -1,0 +1,118 @@
+/* Global styles from the .btn and :host selectors */
+body {
+  font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
+  background-color: #f4f7f6;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.btn {
+  color: black;
+  background-color: white;
+  border: 2px solid #cecece;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn:hover {
+  background-color: #ecf2fd;
+  border-color: #007bff;
+}
+.btn:active {
+  background-color: #d1e0fe;
+}
+.btn:focus {
+  outline: none;
+  border: black solid 2px;
+  box-shadow: 0 0 0 3px rgba(0,123,255,.25);
+}
+
+.btn-primary {
+  color: white;
+  background-color: black;
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1.3rem;
+  border: black solid 2px;
+  margin: 1rem 0;
+  border-radius: 6px;
+}
+.btn-primary:hover {
+  background-color: #444242;
+}
+
+.btn-warn {
+  background-color: #b90000;
+  color: white;
+  border-color: #9a0000;
+}
+.btn-warn:hover {
+  background-color: #9a0000;
+}
+.btn-warn:active {
+  background-color: #e30000;
+  border-color: black;
+}
+
+.btn-save {
+  background-color: black;
+  color: white;
+  border-color: black;
+}
+.btn-save:hover {
+  background-color: #444242;
+}
+
+.sm-text-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 2px solid #555555;
+  display: block;
+  box-sizing: border-box;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+}
+
+.lg-text-input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid black;
+  display: block;
+  box-sizing: border-box;
+  font-size: 1rem;
+  border-radius: 4px;
+}
+
+/* Global Table Styles */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.data-table th, .data-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+.data-table th {
+  background-color: #f2f2f2;
+}
+
+/* Global Component Box Styles */
+.parent-box {
+  border: 2px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.child-box {
+  border: 1px solid #eee;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 4px;
+  background: #fdfdfd;
+}

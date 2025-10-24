@@ -1,0 +1,40 @@
+<nav class="app-nav">
+  <h1 class="app-title">Angular Concepts Demo</h1>
+  <div class="nav-buttons">
+    <button class="btn nav-btn" [class.active]="currentView() === 'todo'" (click)="currentView.set('todo')">
+      Todo App
+    </button>
+    <button class="btn nav-btn" [class.active]="currentView() === 'interactions'"
+      (click)="currentView.set('interactions')">
+      Component Interactions
+    </button>
+    <button class="btn nav-btn" [class.active]="currentView() === 'directives'" (click)="currentView.set('directives')">
+      Directives
+    </button>
+  </div>
+</nav>
+
+<main class="content-wrapper">
+  @switch (currentView()) {
+  @case ('todo') {
+  <app-todo />
+  }
+  @case ('interactions') {
+  <div class="interactions-wrapper">
+    <h2>Component Interaction Examples</h2>
+    <app-parent-component-1 />
+    <app-parent-component-2 />
+    <app-parent-component-3 />
+    <app-parent-component-5 />
+
+    <app-employee-form (employeeAdded)="addEmployee($event)" />
+    <app-employee-list [employee]="employeeToAdd" />
+
+    <app-products />
+  </div>
+  }
+  @case ('directives') {
+  <app-directive-part-1 />
+  }
+  }
+</main>

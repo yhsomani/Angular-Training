@@ -1,0 +1,48 @@
+.main {
+  max-width: 500px;
+  width: 85%;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 2.5rem 5rem 0 rgb(0 0 0 / 10%);
+  border-radius: 8px;
+  background: #fff;
+}
+@media screen and (width >= 600px) {
+  .main {
+    width: 70%;
+  }
+}
+.todo-label {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: block;
+  padding-bottom: 1rem;
+  color: #333;
+}
+
+.btn-wrapper {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.btn-menu {
+  flex-basis: 32%;
+}
+.active {
+  background-color: #d1e0fe;
+  border-color: black;
+  font-weight: bold;
+}
+.todo-list {
+  padding-inline-start: 0;
+  margin: 0;
+}
+.todo-list li {
+  list-style: none;
+}
+.empty-list-message {
+  color: #777;
+  font-style: italic;
+}
